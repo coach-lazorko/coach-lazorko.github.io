@@ -3,7 +3,7 @@ layout: null
 ---
 {%- comment -%}
   Сторінка збирається з файлів у папці _data/ (їх редагує адмінка /admin).
-  Тут — лише розмітка.
+  Тут — лише розмітка. Шляхи до фото з адмінки починаються з «/», тому їм потрібен relative_url.
 {%- endcomment -%}
 {%- assign s = site.data.settings -%}
 {%- assign full_name = s.first_name | append: " " | append: s.last_name -%}
@@ -125,7 +125,7 @@ layout: null
       <div class="container about">
         <div class="about__media reveal">
           {%- if about.photo and about.photo != "" %}
-          <img class="coach-photo" src="{{ about.photo }}" alt="{{ full_name }}">
+          <img class="coach-photo" src="{{ about.photo | relative_url }}" alt="{{ full_name }}">
           {%- else %}
           <div class="photo-placeholder">
             <img src="assets/img/emblem.svg" alt="">
@@ -312,7 +312,7 @@ layout: null
         <div class="gallery">
           {%- if site.data.gallery.items and site.data.gallery.items.size > 0 %}
           {%- for photo in site.data.gallery.items %}
-          <figure class="gallery__item reveal"><img src="{{ photo.image }}" alt="{{ photo.alt | default: 'Фото з тренувань' | escape }}" loading="lazy"></figure>
+          <figure class="gallery__item reveal"><img src="{{ photo.image | relative_url }}" alt="{{ photo.alt | default: 'Фото з тренувань' | escape }}" loading="lazy"></figure>
           {%- endfor %}
           {%- else %}
           {%- assign ph_labels = "Фото з тренувань,Фото,Фото,Фото зі змагань,Фото,Фото,Фото" | split: "," %}
