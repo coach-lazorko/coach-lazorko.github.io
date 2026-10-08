@@ -1,0 +1,7 @@
+# Jekyll збирає сайт на GitHub Pages із шаблону index.html та даних у папці _data/.
+# Дані редагуються через адмінку: /admin
+title: Ярема Лазорко — кікбоксинг WAKO
+lang: uk
+exclude:
+  - README.md
+  - cloudflare

@@ -1,0 +1,13 @@
+# Для розгортання з терміналу: npx wrangler deploy
+# (або вставте worker.js у редактор на dash.cloudflare.com — див. README)
+name = "lazorko-form"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+# не стирати змінні, задані в дашборді
+keep_vars = true
+
+# Секрети задаються окремо й не зберігаються в репозиторії:
+#   npx wrangler secret put TELEGRAM_BOT_TOKEN
+#   npx wrangler secret put TELEGRAM_CHAT_ID
+# ALLOWED_ORIGINS задайте в дашборді (Settings → Variables and Secrets),
+# щоб наступні deploy його не перезаписували.

@@ -1,15 +1,29 @@
+---
+layout: null
+---
+{%- comment -%}
+  Сторінка збирається з файлів у папці _data/ (їх редагує адмінка /admin).
+  Тут — лише розмітка.
+{%- endcomment -%}
+{%- assign s = site.data.settings -%}
+{%- assign full_name = s.first_name | append: " " | append: s.last_name -%}
+{%- assign tg = s.telegram | remove: "@" -%}
+{%- assign tg_url = "https://t.me/" | append: tg -%}
+{%- assign ig = s.instagram | remove: "@" -%}
+{%- assign ig_url = "https://www.instagram.com/" | append: ig | append: "/" -%}
+{%- assign tel = s.phone | remove: " " | remove: "(" | remove: ")" | remove: "-" -%}
 <!doctype html>
 <html lang="uk">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ярема Лазорко — кікбоксинг WAKO у Львові</title>
+  <title>{{ full_name }} — кікбоксинг WAKO у Львові</title>
   <meta name="description" content="Тренування з кікбоксингу WAKO у Львові для дітей та дорослих. Розклад, напрями, запис на тренування.">
   <meta name="theme-color" content="#141210">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
-  <meta property="og:title" content="Ярема Лазорко — кікбоксинг WAKO у Львові">
+  <meta property="og:title" content="{{ full_name }} — кікбоксинг WAKO у Львові">
   <meta property="og:description" content="Тренування з кікбоксингу для дітей та дорослих. Запишіться на тренування!">
 
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -18,29 +32,12 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rubik:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="assets/css/style.css">
   <script>document.documentElement.classList.add("js");</script>
+  {%- if s.cf_analytics_token and s.cf_analytics_token != "" %}
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ s.cf_analytics_token | strip }}"}'></script>
+  {%- endif %}
 </head>
 <body>
-  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-    <symbol id="i-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M7.03.084c-1.277.06-2.149.264-2.91.563a5.9 5.9 0 0 0-2.124 1.388a5.9 5.9 0 0 0-1.38 2.127C.321 4.926.12 5.8.064 7.076s-.069 1.688-.063 4.947s.021 3.667.083 4.947c.061 1.277.264 2.149.563 2.911c.308.789.72 1.457 1.388 2.123a5.9 5.9 0 0 0 2.129 1.38c.763.295 1.636.496 2.913.552c1.278.056 1.689.069 4.947.063s3.668-.021 4.947-.082c1.28-.06 2.147-.265 2.91-.563a5.9 5.9 0 0 0 2.123-1.388a5.9 5.9 0 0 0 1.38-2.129c.295-.763.496-1.636.551-2.912c.056-1.28.07-1.69.063-4.948c-.006-3.258-.02-3.667-.081-4.947c-.06-1.28-.264-2.148-.564-2.911a5.9 5.9 0 0 0-1.387-2.123a5.9 5.9 0 0 0-2.128-1.38c-.764-.294-1.636-.496-2.914-.55C15.647.009 15.236-.006 11.977 0S8.31.021 7.03.084m.14 21.693c-1.17-.05-1.805-.245-2.228-.408a3.7 3.7 0 0 1-1.382-.895a3.7 3.7 0 0 1-.9-1.378c-.165-.423-.363-1.058-.417-2.228c-.06-1.264-.072-1.644-.08-4.848c-.006-3.204.006-3.583.061-4.848c.05-1.169.246-1.805.408-2.228c.216-.561.477-.96.895-1.382a3.7 3.7 0 0 1 1.379-.9c.423-.165 1.057-.361 2.227-.417c1.265-.06 1.644-.072 4.848-.08c3.203-.006 3.583.006 4.85.062c1.168.05 1.804.244 2.227.408c.56.216.96.475 1.382.895s.681.817.9 1.378c.165.422.362 1.056.417 2.227c.06 1.265.074 1.645.08 4.848c.005 3.203-.006 3.583-.061 4.848c-.051 1.17-.245 1.805-.408 2.23c-.216.56-.477.96-.896 1.38a3.7 3.7 0 0 1-1.378.9c-.422.165-1.058.362-2.226.418c-1.266.06-1.645.072-4.85.079s-3.582-.006-4.848-.06m9.783-16.192a1.44 1.44 0 1 0 1.437-1.442a1.44 1.44 0 0 0-1.437 1.442M5.839 12.012a6.161 6.161 0 1 0 12.323-.024a6.162 6.162 0 0 0-12.323.024M8 12.008A4 4 0 1 1 12.008 16A4 4 0 0 1 8 12.008"/></symbol>
-    <symbol id="i-telegram" viewBox="0 0 24 24"><path fill="currentColor" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12a12 12 0 0 0 12-12A12 12 0 0 0 12 0zm4.962 7.224c.1-.002.321.023.465.14a.5.5 0 0 1 .171.325c.016.093.036.306.02.472c-.18 1.898-.962 6.502-1.36 8.627c-.168.9-.499 1.201-.82 1.23c-.696.065-1.225-.46-1.9-.902c-1.056-.693-1.653-1.124-2.678-1.8c-1.185-.78-.417-1.21.258-1.91c.177-.184 3.247-2.977 3.307-3.23c.007-.032.014-.15-.056-.212s-.174-.041-.249-.024q-.159.037-5.061 3.345q-.72.495-1.302.48c-.428-.008-1.252-.241-1.865-.44c-.752-.245-1.349-.374-1.297-.789q.04-.324.893-.663q5.247-2.286 6.998-3.014c3.332-1.386 4.025-1.627 4.476-1.635"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233a14 14 0 0 0 6.392 6.384"/></symbol>
-    <symbol id="i-map-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></g></symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></g></symbol>
-    <symbol id="i-medal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7.21 15L2.66 7.14a2 2 0 0 1 .13-2.2L4.4 2.8A2 2 0 0 1 6 2h12a2 2 0 0 1 1.6.8l1.6 2.14a2 2 0 0 1 .14 2.2L16.79 15M11 12L5.12 2.2M13 12l5.88-9.8M8 7h8"/><circle cx="12" cy="17" r="5"/><path d="M12 18v-2h-.5"/></g></symbol>
-    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7-7l7 7l-7 7"/></symbol>
-    <symbol id="i-send" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11zm7.318-19.539l-10.94 10.939"/></symbol>
-    <symbol id="i-trophy" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 14.66V17a1 1 0 0 1-1 1a2 2 0 0 0-2 2v2m7-7.34V17a1 1 0 0 0 1 1a2 2 0 0 1 2 2v2m.916-12H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3M4 22h16"/><path d="M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z"/><path d="M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3"/></g></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.128a4 4 0 0 1 0 7.744M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></g></symbol>
-    <symbol id="i-dumbbell" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829zM2.5 21.5l1.4-1.4M20.1 3.9l1.4-1.4M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829zM9.6 14.4l4.8-4.8"/></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g></symbol>
-    <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></g></symbol>
-    <symbol id="i-flame" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0a5 5 0 0 1 1-3a1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"/></symbol>
-    <symbol id="i-shield-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12l2 2l4-4"/></g></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 6L9 17l-5-5"/></symbol>
-    <symbol id="i-camera" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"/><circle cx="12" cy="13" r="3"/></g></symbol>
-    <symbol id="i-baby" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5m1-4h.01"/><path d="M19.38 6.813A9 9 0 0 1 20.8 10.2a2 2 0 0 1 0 3.6a9 9 0 0 1-17.6 0a2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1m-3 5h.01"/></g></symbol>
-    <symbol id="i-navigation" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 11l19-9l-9 19l-2-8z"/></symbol>
-  </svg>
+{% include icons.html %}
 
   <a class="skip-link" href="#main">Перейти до змісту</a>
 
@@ -50,17 +47,19 @@
       <a class="brand" href="#top" aria-label="На початок сторінки">
         <img class="brand__logo" src="assets/img/emblem.svg" alt="" width="48" height="48">
         <span class="brand__text">
-          <b>Лазорко</b>
+          <b>{{ s.last_name }}</b>
           <small>Кікбоксинг WAKO</small>
         </span>
       </a>
 
       <nav class="nav" id="nav" aria-label="Головне меню">
-        <a href="#about">Про тренера</a>
+        <a href="#about">Тренер</a>
         <a href="#programs">Напрями</a>
         <a href="#schedule">Розклад</a>
         <a href="#achievements">Досягнення</a>
-        <a href="#gallery">Галерея</a>
+        <a href="#videos">Відео</a>
+        <a href="#reviews">Відгуки</a>
+        <a href="#faq">Питання</a>
         <a href="#contacts">Контакти</a>
         <a class="btn btn--primary nav__cta" href="#contacts">Записатися</a>
       </nav>
@@ -95,11 +94,10 @@
             <a class="btn btn--ghost btn--lg" href="#schedule">Розклад</a>
           </div>
 
-          <!-- TODO: замініть XX на реальні цифри -->
           <ul class="stats">
-            <li><b>XX+</b><span>років досвіду</span></li>
-            <li><b>XXX+</b><span>вихованців</span></li>
-            <li><b>XX</b><span>медалей учнів</span></li>
+            {%- for stat in s.stats %}
+            <li><b>{{ stat.value | escape }}</b><span>{{ stat.label | escape }}</span></li>
+            {%- endfor %}
           </ul>
         </div>
 
@@ -121,14 +119,19 @@
     </div>
 
     <!-- ============ ABOUT ============ -->
+    {%- assign about = site.data.about %}
+    {%- assign fact_icons = "medal,shield-check,clock,trophy" | split: "," %}
     <section class="section" id="about">
       <div class="container about">
         <div class="about__media reveal">
-          <!-- TODO: замініть заглушку на <img src="assets/img/coach.jpg" alt="Тренер ..."> -->
+          {%- if about.photo and about.photo != "" %}
+          <img class="coach-photo" src="{{ about.photo }}" alt="{{ full_name }}">
+          {%- else %}
           <div class="photo-placeholder">
             <img src="assets/img/emblem.svg" alt="">
             <span>Фото тренера</span>
           </div>
+          {%- endif %}
           <div class="about__badge">
             <b>WAKO</b>
             <span>World Association of Kickboxing Organizations</span>
@@ -137,30 +140,18 @@
 
         <div class="about__body reveal">
           <p class="eyebrow">Про тренера</p>
-          <h2 class="h2">Ярема <span class="mark">Лазорко</span></h2>
-          <p class="lead">Тренер з кікбоксингу WAKO, м. Львів.</p>
-          <p class="muted">
-            Тут буде розповідь про тренера: спортивний шлях, звання, тренерський досвід
-            і підхід до тренувань. Цей текст тимчасовий — його буде замінено.
-          </p>
+          <h2 class="h2">{{ s.first_name }} <span class="mark">{{ s.last_name }}</span></h2>
+          <p class="lead">{{ about.lead | escape }}</p>
+          <div class="about__text muted">{{ about.text | markdownify }}</div>
 
           <ul class="facts">
+            {%- for fact in about.facts %}
+            {%- assign i = forloop.index0 | modulo: 4 %}
             <li>
-              <span class="icon-badge"><svg><use href="#i-medal"/></svg></span>
-              <div><b>Спортивне звання</b><span>буде додано</span></div>
+              <span class="icon-badge"><svg><use href="#i-{{ fact_icons[i] }}"/></svg></span>
+              <div><b>{{ fact.title | escape }}</b><span>{{ fact.value | escape }}</span></div>
             </li>
-            <li>
-              <span class="icon-badge"><svg><use href="#i-shield-check"/></svg></span>
-              <div><b>Тренерська категорія</b><span>буде додано</span></div>
-            </li>
-            <li>
-              <span class="icon-badge"><svg><use href="#i-clock"/></svg></span>
-              <div><b>Досвід роботи</b><span>буде додано</span></div>
-            </li>
-            <li>
-              <span class="icon-badge"><svg><use href="#i-trophy"/></svg></span>
-              <div><b>Вихованці</b><span>буде додано</span></div>
-            </li>
+            {%- endfor %}
           </ul>
         </div>
       </div>
@@ -208,36 +199,14 @@
         </div>
 
         <div class="programs">
+          {%- for p in site.data.programs.items %}
           <article class="program reveal">
-            <span class="program__icon"><svg><use href="#i-baby"/></svg></span>
-            <span class="tag">6–11 років</span>
-            <h3>Діти</h3>
-            <p>Координація, дисципліна та впевненість у собі. Заняття в ігровій формі з поступовим вивченням техніки.</p>
+            <span class="program__icon"><svg><use href="#i-{{ p.icon | default: 'target' }}"/></svg></span>
+            <span class="tag">{{ p.tag | escape }}</span>
+            <h3>{{ p.title | escape }}</h3>
+            <p>{{ p.text | escape }}</p>
           </article>
-          <article class="program reveal">
-            <span class="program__icon"><svg><use href="#i-users"/></svg></span>
-            <span class="tag">12–17 років</span>
-            <h3>Підлітки</h3>
-            <p>Постановка техніки, загальна та спеціальна фізична підготовка, перші змагання.</p>
-          </article>
-          <article class="program reveal">
-            <span class="program__icon"><svg><use href="#i-dumbbell"/></svg></span>
-            <span class="tag">18+</span>
-            <h3>Дорослі</h3>
-            <p>Кікбоксинг для форми, витривалості та самозахисту. Підходить для будь-якого рівня підготовки.</p>
-          </article>
-          <article class="program reveal">
-            <span class="program__icon"><svg><use href="#i-trophy"/></svg></span>
-            <span class="tag">За відбором</span>
-            <h3>Спортивна група</h3>
-            <p>Підготовка до змагань WAKO: чемпіонати області, України та міжнародні турніри.</p>
-          </article>
-          <article class="program reveal">
-            <span class="program__icon"><svg><use href="#i-user"/></svg></span>
-            <span class="tag">Персонально</span>
-            <h3>Індивідуальні</h3>
-            <p>Персональна програма, робота над технікою й тактикою у зручний для вас час.</p>
-          </article>
+          {%- endfor %}
           <article class="program program--cta reveal">
             <h3>Перше тренування</h3>
             <p>Не знаєте, з чого почати? Залиште заявку — підберемо групу за віком і рівнем.</p>
@@ -251,6 +220,8 @@
     </section>
 
     <!-- ============ SCHEDULE ============ -->
+    {%- assign days = "mon,tue,wed,thu,fri,sat,sun" | split: "," %}
+    {%- assign day_names = "Пн,Вт,Ср,Чт,Пт,Сб,Нд" | split: "," %}
     <section class="section" id="schedule">
       <div class="container">
         <div class="section-head reveal">
@@ -258,49 +229,46 @@
           <h2 class="h2">Розклад <span class="mark">тренувань</span></h2>
         </div>
 
-        <!-- TODO: впишіть реальний час замість --:-- -->
+        {%- for table in site.data.schedule.tables %}
+        {%- assign day_count = 6 %}
+        {%- for row in table.rows %}{% if row.sun and row.sun != "" %}{% assign day_count = 7 %}{% endif %}{% endfor %}
+        {%- if table.title and table.title != "" %}
+        <h3 class="schedule-title reveal">{{ table.title | escape }}</h3>
+        {%- endif %}
         <div class="table-wrap reveal">
           <table class="schedule">
             <thead>
               <tr>
                 <th scope="col">Група</th>
-                <th scope="col">Пн</th><th scope="col">Вт</th><th scope="col">Ср</th>
-                <th scope="col">Чт</th><th scope="col">Пт</th><th scope="col">Сб</th>
+                {%- for d in day_names limit: day_count %}
+                <th scope="col">{{ d }}</th>
+                {%- endfor %}
               </tr>
             </thead>
             <tbody>
+              {%- for row in table.rows %}
               <tr>
-                <th scope="row">Діти <small>6–11 років</small></th>
-                <td><span class="slot">--:--</span></td><td class="empty">—</td>
-                <td><span class="slot">--:--</span></td><td class="empty">—</td>
-                <td><span class="slot">--:--</span></td><td class="empty">—</td>
+                <th scope="row">{{ row.group | escape }}{% if row.note and row.note != "" %} <small>{{ row.note | escape }}</small>{% endif %}</th>
+                {%- for d in days limit: day_count %}
+                {%- assign t = row[d] | strip %}
+                {%- if t != "" %}
+                <td><span class="slot{% if row.highlight %} slot--hot{% endif %}">{{ t | escape }}</span></td>
+                {%- else %}
+                <td class="empty">—</td>
+                {%- endif %}
+                {%- endfor %}
               </tr>
-              <tr>
-                <th scope="row">Підлітки <small>12–17 років</small></th>
-                <td class="empty">—</td><td><span class="slot">--:--</span></td>
-                <td class="empty">—</td><td><span class="slot">--:--</span></td>
-                <td class="empty">—</td><td><span class="slot">--:--</span></td>
-              </tr>
-              <tr>
-                <th scope="row">Дорослі <small>18+</small></th>
-                <td><span class="slot">--:--</span></td><td class="empty">—</td>
-                <td><span class="slot">--:--</span></td><td class="empty">—</td>
-                <td><span class="slot">--:--</span></td><td class="empty">—</td>
-              </tr>
-              <tr>
-                <th scope="row">Спортивна група <small>за відбором</small></th>
-                <td><span class="slot slot--hot">--:--</span></td><td><span class="slot slot--hot">--:--</span></td>
-                <td><span class="slot slot--hot">--:--</span></td><td><span class="slot slot--hot">--:--</span></td>
-                <td><span class="slot slot--hot">--:--</span></td><td class="empty">—</td>
-              </tr>
+              {%- endfor %}
             </tbody>
           </table>
         </div>
+        {%- endfor %}
+        {%- if site.data.schedule.note and site.data.schedule.note != "" %}
         <p class="note">
           <svg aria-hidden="true"><use href="#i-clock"/></svg>
-          <span>Розклад буде оновлено. Актуальний час уточнюйте в
-          <a href="https://t.me/Onionmm" target="_blank" rel="noopener">Telegram</a>.</span>
+          <span>{{ site.data.schedule.note | markdownify | remove: "<p>" | remove: "</p>" | strip }}</span>
         </p>
+        {%- endif %}
       </div>
     </section>
 
@@ -312,32 +280,17 @@
           <h2 class="h2">Результати наших спортсменів</h2>
         </div>
 
-        <!-- TODO: замініть картки на реальні результати -->
         <div class="achievements">
+          {%- for a in site.data.achievements.items %}
+          {%- if a.medal == "trophy" %}{% assign medal_class = "gold" %}{% assign medal_icon = "trophy" %}
+          {%- else %}{% assign medal_class = a.medal | default: "gold" %}{% assign medal_icon = "medal" %}{% endif %}
           <article class="achievement reveal">
-            <span class="medal medal--gold"><svg><use href="#i-medal"/></svg></span>
-            <h3>Назва змагань</h3>
-            <p class="achievement__meta">Рік · місто</p>
-            <p>Результат буде додано</p>
+            <span class="medal medal--{{ medal_class }}"><svg><use href="#i-{{ medal_icon }}"/></svg></span>
+            <h3>{{ a.title | escape }}</h3>
+            <p class="achievement__meta">{{ a.meta | escape }}</p>
+            <p>{{ a.result | escape }}</p>
           </article>
-          <article class="achievement reveal">
-            <span class="medal medal--silver"><svg><use href="#i-medal"/></svg></span>
-            <h3>Назва змагань</h3>
-            <p class="achievement__meta">Рік · місто</p>
-            <p>Результат буде додано</p>
-          </article>
-          <article class="achievement reveal">
-            <span class="medal medal--bronze"><svg><use href="#i-medal"/></svg></span>
-            <h3>Назва змагань</h3>
-            <p class="achievement__meta">Рік · місто</p>
-            <p>Результат буде додано</p>
-          </article>
-          <article class="achievement reveal">
-            <span class="medal medal--gold"><svg><use href="#i-trophy"/></svg></span>
-            <h3>Назва змагань</h3>
-            <p class="achievement__meta">Рік · місто</p>
-            <p>Результат буде додано</p>
-          </article>
+          {%- endfor %}
         </div>
       </div>
     </section>
@@ -350,21 +303,100 @@
             <p class="eyebrow">Галерея</p>
             <h2 class="h2">Життя <span class="mark">залу</span></h2>
           </div>
-          <a class="btn btn--ghost" href="https://www.instagram.com/coach_lazorko/" target="_blank" rel="noopener">
+          <a class="btn btn--ghost" href="{{ ig_url }}" target="_blank" rel="noopener">
             <svg aria-hidden="true"><use href="#i-instagram"/></svg>
             Більше в Instagram
           </a>
         </div>
 
-        <!-- TODO: замініть заглушки на <figure class="gallery__item"><img src="assets/img/photo-1.jpg" alt="..."></figure> -->
         <div class="gallery">
-          <figure class="gallery__item gallery__item--big reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото з тренувань</span></div></figure>
-          <figure class="gallery__item reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото</span></div></figure>
-          <figure class="gallery__item reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото</span></div></figure>
-          <figure class="gallery__item gallery__item--wide reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото зі змагань</span></div></figure>
-          <figure class="gallery__item reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото</span></div></figure>
-          <figure class="gallery__item reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото</span></div></figure>
-          <figure class="gallery__item gallery__item--wide reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>Фото</span></div></figure>
+          {%- if site.data.gallery.items and site.data.gallery.items.size > 0 %}
+          {%- for photo in site.data.gallery.items %}
+          <figure class="gallery__item reveal"><img src="{{ photo.image }}" alt="{{ photo.alt | default: 'Фото з тренувань' | escape }}" loading="lazy"></figure>
+          {%- endfor %}
+          {%- else %}
+          {%- assign ph_labels = "Фото з тренувань,Фото,Фото,Фото зі змагань,Фото,Фото,Фото" | split: "," %}
+          {%- for label in ph_labels %}
+          <figure class="gallery__item reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>{{ label }}</span></div></figure>
+          {%- endfor %}
+          {%- endif %}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VIDEOS ============ -->
+    <section class="section section--dark" id="videos">
+      <div class="container">
+        <div class="section-head section-head--row reveal">
+          <div>
+            <p class="eyebrow">Відео</p>
+            <h2 class="h2">Тренування та <span class="accent">бої</span></h2>
+          </div>
+          <a class="btn btn--ghost" href="{{ ig_url }}" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-instagram"/></svg>
+            Більше в Instagram
+          </a>
+        </div>
+
+        <div class="videos">
+          {%- if site.data.videos.items and site.data.videos.items.size > 0 %}
+          {%- for v in site.data.videos.items %}
+          <figure class="video reveal" data-video="{{ v.url | strip | escape }}" data-title="{{ v.title | escape }}"{% if v.vertical %} data-vertical{% endif %}>
+            <div class="ph"><svg><use href="#i-video"/></svg><span>{{ v.title | default: "Відео" | escape }}</span></div>
+          </figure>
+          {%- endfor %}
+          {%- else %}
+          <figure class="video reveal"><div class="ph"><svg><use href="#i-video"/></svg><span>Відео буде додано</span></div></figure>
+          <figure class="video reveal" data-vertical><div class="ph"><svg><use href="#i-video"/></svg><span>Reels</span></div></figure>
+          <figure class="video reveal" data-vertical><div class="ph"><svg><use href="#i-video"/></svg><span>Reels</span></div></figure>
+          <figure class="video reveal" data-vertical><div class="ph"><svg><use href="#i-video"/></svg><span>Reels</span></div></figure>
+          {%- endif %}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="section section--alt" id="reviews">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Відгуки</p>
+          <h2 class="h2">Що кажуть <span class="mark">учні та батьки</span></h2>
+        </div>
+
+        <div class="reviews">
+          {%- for r in site.data.reviews.items %}
+          <article class="review reveal">
+            <blockquote class="review__text"><p>{{ r.text | escape }}</p></blockquote>
+            <footer class="review__author">
+              <span class="review__avatar" aria-hidden="true">{{ r.name | strip | slice: 0 }}</span>
+              <div><b>{{ r.name | escape }}</b>{% if r.role and r.role != "" %}<span>{{ r.role | escape }}</span>{% endif %}</div>
+            </footer>
+          </article>
+          {%- endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="container faq">
+        <div class="faq__head reveal">
+          <p class="eyebrow">Питання</p>
+          <h2 class="h2">Часті <span class="mark">питання</span></h2>
+          <p class="muted">Не знайшли відповіді? Напишіть — відповімо на все.</p>
+          <a class="btn btn--primary" href="{{ tg_url }}" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-telegram"/></svg>
+            Запитати в Telegram
+          </a>
+        </div>
+
+        <div class="faq__list reveal">
+          {%- for q in site.data.faq.items %}
+          <details class="faq__item" name="faq">
+            <summary>{{ q.question | escape }}</summary>
+            <div class="faq__answer">{{ q.answer | markdownify }}</div>
+          </details>
+          {%- endfor %}
         </div>
       </div>
     </section>
@@ -381,35 +413,32 @@
               Або напишіть напряму в месенджер.
             </p>
 
-            <!-- TODO: телефон -->
             <ul class="contact-list">
               <li>
                 <span class="icon-badge"><svg><use href="#i-phone"/></svg></span>
-                <div><small>Телефон</small><a href="tel:+380000000000">+380 00 000 00 00</a></div>
+                <div><small>Телефон</small><a href="tel:{{ tel }}">{{ s.phone | escape }}</a></div>
               </li>
               <li>
                 <span class="icon-badge"><svg><use href="#i-telegram"/></svg></span>
-                <div><small>Telegram</small><a href="https://t.me/Onionmm" target="_blank" rel="noopener">@Onionmm</a></div>
+                <div><small>Telegram</small><a href="{{ tg_url }}" target="_blank" rel="noopener">@{{ tg }}</a></div>
               </li>
               <li>
                 <span class="icon-badge"><svg><use href="#i-instagram"/></svg></span>
-                <div><small>Instagram</small><a href="https://www.instagram.com/coach_lazorko/" target="_blank" rel="noopener">@coach_lazorko</a></div>
+                <div><small>Instagram</small><a href="{{ ig_url }}" target="_blank" rel="noopener">@{{ ig }}</a></div>
               </li>
+              {%- for g in s.gyms %}
               <li>
                 <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
-                <div><small>Зал №1</small><a href="#map-1">м. Львів, вул. Піша, 1</a></div>
+                <div><small>{{ g.name | escape }}</small><a href="#map-{{ forloop.index }}">{{ g.address | escape }}</a></div>
               </li>
-              <li>
-                <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
-                <div><small>Зал №2</small><a href="#map-2">м. Львів, вул. Замарстинівська, 49</a></div>
-              </li>
+              {%- endfor %}
             </ul>
 
             <div class="socials">
-              <a class="social social--instagram" href="https://www.instagram.com/coach_lazorko/" target="_blank" rel="noopener">
+              <a class="social social--instagram" href="{{ ig_url }}" target="_blank" rel="noopener">
                 <svg aria-hidden="true"><use href="#i-instagram"/></svg> Instagram
               </a>
-              <a class="social social--telegram" href="https://t.me/Onionmm" target="_blank" rel="noopener">
+              <a class="social social--telegram" href="{{ tg_url }}" target="_blank" rel="noopener">
                 <svg aria-hidden="true"><use href="#i-telegram"/></svg> Telegram
               </a>
             </div>
@@ -419,9 +448,8 @@
             <h3 class="form-card__title">Заявка на тренування</h3>
             <p class="form-card__sub">Відповімо протягом дня</p>
 
-            <!-- TODO: замініть YOUR_FORM_ID на ID форми з formspree.io (див. README) -->
-            <form class="form" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-              <input type="hidden" name="_subject" value="Нова заявка з сайту">
+            {%- comment %} Заявки йдуть через Cloudflare Worker у Telegram (cloudflare/form-to-telegram) {% endcomment %}
+            <form class="form" id="contact-form" action="{{ s.form_endpoint | strip }}" method="POST">
               <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 
               <div class="form__row">
@@ -440,13 +468,23 @@
                 <label for="f-group">Група</label>
                 <select id="f-group" name="group">
                   <option value="" selected>Оберіть групу</option>
-                  <option>Діти (6–11 років)</option>
-                  <option>Підлітки (12–17 років)</option>
-                  <option>Дорослі (18+)</option>
-                  <option>Спортивна група</option>
-                  <option>Індивідуальні тренування</option>
+                  {%- for p in site.data.programs.items %}
+                  <option>{{ p.title | escape }}{% if p.tag contains "рок" or p.tag contains "+" %} ({{ p.tag | escape }}){% endif %}</option>
+                  {%- endfor %}
                 </select>
               </div>
+
+              {%- if s.gyms.size > 1 %}
+              <div class="field">
+                <label for="f-gym">Зал</label>
+                <select id="f-gym" name="gym">
+                  <option value="" selected>Будь-який</option>
+                  {%- for g in s.gyms %}
+                  <option>{{ g.address | escape }}</option>
+                  {%- endfor %}
+                </select>
+              </div>
+              {%- endif %}
 
               <fieldset class="field">
                 <legend>Як з вами зв’язатися?</legend>
@@ -473,48 +511,32 @@
           </div>
         </div>
 
-        <!-- Щоб змінити адресу — замініть текст після q= у src та destination= у посиланні -->
         <div class="locations">
           <div class="locations__head reveal">
             <p class="eyebrow">Локації</p>
-            <h2 class="h2">Два зали у <span class="accent">Львові</span></h2>
+            <h2 class="h2">Наші <span class="accent">зали</span></h2>
           </div>
-          <div class="map reveal" id="map-1">
+          {%- for g in s.gyms %}
+          {%- assign map_q = g.map_query | default: g.address | url_encode %}
+          <div class="map reveal" id="map-{{ forloop.index }}">
             <iframe
-              title="Мапа: Зал №1"
-              src="https://maps.google.com/maps?q=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%9F%D1%96%D1%88%D0%B0%2C%201%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&amp;z=16&amp;output=embed"
+              title="Мапа: {{ g.name | escape }}"
+              src="https://maps.google.com/maps?q={{ map_q }}&amp;z=16&amp;output=embed"
               loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
             <div class="map__card">
               <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
               <div>
-                <b>Зал №1</b>
-                <span>м. Львів, вул. Піша, 1</span>
+                <b>{{ g.name | escape }}</b>
+                <span>{{ g.address | escape }}</span>
               </div>
               <a class="btn btn--primary" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%9F%D1%96%D1%88%D0%B0%2C%201%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2">
+                 href="https://www.google.com/maps/dir/?api=1&amp;destination={{ map_q }}">
                 <svg aria-hidden="true"><use href="#i-navigation"/></svg>
                 Маршрут
               </a>
             </div>
           </div>
-          <div class="map reveal" id="map-2">
-            <iframe
-              title="Мапа: Зал №2"
-              src="https://maps.google.com/maps?q=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%97%D0%B0%D0%BC%D0%B0%D1%80%D1%81%D1%82%D0%B8%D0%BD%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C%2049%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&amp;z=16&amp;output=embed"
-              loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-            <div class="map__card">
-              <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
-              <div>
-                <b>Зал №2</b>
-                <span>м. Львів, вул. Замарстинівська, 49</span>
-              </div>
-              <a class="btn btn--primary" target="_blank" rel="noopener"
-                 href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%97%D0%B0%D0%BC%D0%B0%D1%80%D1%81%D1%82%D0%B8%D0%BD%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C%2049%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2">
-                <svg aria-hidden="true"><use href="#i-navigation"/></svg>
-                Маршрут
-              </a>
-            </div>
-          </div>
+          {%- endfor %}
         </div>
       </div>
     </section>
@@ -526,7 +548,7 @@
       <div class="footer__brand">
         <a class="brand brand--light" href="#top">
           <img class="brand__logo" src="assets/img/emblem.svg" alt="" width="48" height="48">
-          <span class="brand__text"><b>Лазорко</b><small>Кікбоксинг WAKO</small></span>
+          <span class="brand__text"><b>{{ s.last_name }}</b><small>Кікбоксинг WAKO</small></span>
         </a>
         <p>Тренування з кікбоксингу для дітей та дорослих у Львові.</p>
       </div>
@@ -537,30 +559,40 @@
         <a href="#schedule">Розклад</a>
         <a href="#achievements">Досягнення</a>
         <a href="#gallery">Галерея</a>
+        <a href="#videos">Відео</a>
+        <a href="#reviews">Відгуки</a>
+        <a href="#faq">Питання</a>
         <a href="#contacts">Контакти</a>
       </nav>
 
       <div class="footer__social">
-        <a href="https://www.instagram.com/coach_lazorko/" target="_blank" rel="noopener" aria-label="Instagram">
+        <a href="{{ ig_url }}" target="_blank" rel="noopener" aria-label="Instagram">
           <svg><use href="#i-instagram"/></svg>
         </a>
-        <a href="https://t.me/Onionmm" target="_blank" rel="noopener" aria-label="Telegram">
+        <a href="{{ tg_url }}" target="_blank" rel="noopener" aria-label="Telegram">
           <svg><use href="#i-telegram"/></svg>
         </a>
-        <a href="tel:+380000000000" aria-label="Зателефонувати">
+        <a href="tel:{{ tel }}" aria-label="Зателефонувати">
           <svg><use href="#i-phone"/></svg>
         </a>
       </div>
     </div>
     <div class="container footer__bottom">
-      <span>© <span data-year>2026</span> Ярема Лазорко. Усі права захищені.</span>
+      <span>© <span data-year>{{ site.time | date: "%Y" }}</span> {{ full_name }}. Усі права захищені.</span>
       <span class="footer__credits">Силует: <a href="https://game-icons.net" target="_blank" rel="noopener">game-icons.net</a> (CC BY 3.0)</span>
     </div>
   </footer>
 
-  <a class="fab" href="https://t.me/Onionmm" target="_blank" rel="noopener" aria-label="Написати в Telegram">
+  <a class="fab" href="{{ tg_url }}" target="_blank" rel="noopener" aria-label="Написати в Telegram">
     <svg><use href="#i-telegram"/></svg>
   </a>
+
+  <dialog class="lightbox" id="video-dialog" aria-label="Перегляд відео">
+    <button class="lightbox__close" type="button" aria-label="Закрити відео">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="lightbox__frame"></div>
+  </dialog>
 
   <script src="assets/js/main.js" defer></script>
 </body>

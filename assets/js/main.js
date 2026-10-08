@@ -60,7 +60,7 @@ if ('IntersectionObserver' in window) {
   sections.forEach((s) => navObserver.observe(s));
 }
 
-/* ---------- Contact form (Formspree) ---------- */
+/* ---------- Contact form → Cloudflare Worker → Telegram ---------- */
 const form = document.getElementById('contact-form');
 if (form) {
   const status = form.querySelector('.form__status');
@@ -77,7 +77,8 @@ if (form) {
       form.reportValidity();
       return;
     }
-    if (form.action.includes('YOUR_FORM_ID')) {
+    const endpoint = form.getAttribute('action');
+    if (!endpoint) {
       setStatus('Форму ще не підключено. Будь ласка, напишіть нам у Telegram або зателефонуйте.', 'error');
       return;
     }
@@ -85,7 +86,7 @@ if (form) {
     submit.disabled = true;
     setStatus('Надсилаємо…');
     try {
-      const res = await fetch(form.action, {
+      const res = await fetch(endpoint, {
         method: 'POST',
         body: new FormData(form),
         headers: { Accept: 'application/json' },
@@ -100,6 +101,100 @@ if (form) {
     }
   });
 }
+
+/* ---------- Videos ----------
+   У data-video — посилання на YouTube (відео або Shorts), Instagram Reels чи файл .mp4.
+   YouTube та .mp4 відкриваються у вікні на сайті, Instagram — в Instagram. */
+const escapeHtml = (str) => String(str).replace(/[&<>"']/g, (c) => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+));
+
+function parseVideo(url) {
+  if (!url) return null;
+  let u;
+  try { u = new URL(url, window.location.href); } catch { return null; }
+  const host = u.hostname.replace(/^(www|m)\./, '');
+
+  if (host === 'youtu.be' || host.endsWith('youtube.com')) {
+    const id = host === 'youtu.be'
+      ? u.pathname.slice(1).split('/')[0]
+      : u.searchParams.get('v') || (u.pathname.match(/^\/(?:shorts|embed|live)\/([\w-]+)/) || [])[1];
+    if (id && /^[\w-]{6,}$/.test(id)) {
+      return { type: 'youtube', id, vertical: u.pathname.startsWith('/shorts/') };
+    }
+  }
+  if (host === 'instagram.com') {
+    const m = u.pathname.match(/^\/(p|reels?|tv)\/([\w-]+)/);
+    if (m) return { type: 'instagram', url: `https://www.instagram.com/${m[1] === 'p' ? 'p' : 'reel'}/${m[2]}/`, vertical: true };
+  }
+  if (/\.(mp4|webm|mov|m4v)$/i.test(u.pathname)) return { type: 'file', src: u.href };
+  return null;
+}
+
+const videoDialog = document.getElementById('video-dialog');
+const videoFrame = videoDialog?.querySelector('.lightbox__frame');
+
+function openVideo(html, vertical, title) {
+  videoFrame.innerHTML = html;
+  videoFrame.classList.toggle('is-vertical', vertical);
+  videoDialog.showModal();
+}
+
+if (videoDialog) {
+  videoDialog.querySelector('.lightbox__close').addEventListener('click', () => videoDialog.close());
+  // клік по темному фону закриває відео
+  videoDialog.addEventListener('click', (e) => {
+    if (e.target === videoDialog) videoDialog.close();
+  });
+  // зупиняємо відтворення при закритті
+  videoDialog.addEventListener('close', () => { videoFrame.innerHTML = ''; });
+}
+
+document.querySelectorAll('.video[data-video]').forEach((card) => {
+  const info = parseVideo(card.dataset.video.trim());
+  if (!info) return; // невідоме посилання — лишаємо заглушку
+
+  const title = card.dataset.title || 'Відео';
+  const safeTitle = escapeHtml(title);
+  const play = '<span class="video__play"><svg aria-hidden="true"><use href="#i-play"/></svg></span>';
+  const caption = `<span class="video__title">${safeTitle}</span>`;
+  const isVertical = () => card.classList.contains('video--vertical') || 'vertical' in card.dataset;
+  if (info.vertical) card.classList.add('video--vertical');
+
+  if (info.type === 'instagram') {
+    card.innerHTML = `
+      <a class="video__btn video__btn--ig" href="${info.url}" target="_blank" rel="noopener"
+         aria-label="Дивитись в Instagram: ${safeTitle}">
+        <svg class="video__corner video__corner--left" aria-hidden="true"><use href="#i-instagram"/></svg>
+        <svg class="video__corner video__corner--right" aria-hidden="true"><use href="#i-external"/></svg>
+        ${play}${caption}
+      </a>`;
+    return;
+  }
+
+  let preview;
+  let player;
+  if (info.type === 'youtube') {
+    preview = `<img src="https://i.ytimg.com/vi/${info.id}/hqdefault.jpg" alt="" loading="lazy">`;
+    player = () => `<iframe src="https://www.youtube-nocookie.com/embed/${info.id}?autoplay=1&rel=0&playsinline=1"
+      title="${safeTitle}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  } else {
+    const src = escapeHtml(info.src);
+    preview = `<video src="${src}#t=0.5" preload="metadata" muted playsinline></video>`;
+    player = () => `<video src="${src}" controls autoplay playsinline></video>`;
+  }
+
+  card.innerHTML = `<button class="video__btn" type="button" aria-label="Дивитись: ${safeTitle}">${preview}${play}${caption}</button>`;
+  card.querySelector('button').addEventListener('click', () => openVideo(player(), isVertical(), title));
+
+  // для файлів орієнтацію визначаємо за самим відео
+  const previewVideo = card.querySelector('video');
+  if (previewVideo && !('vertical' in card.dataset)) {
+    previewVideo.addEventListener('loadedmetadata', () => {
+      card.classList.toggle('video--vertical', previewVideo.videoHeight > previewVideo.videoWidth);
+    });
+  }
+});
 
 /* ---------- Current year ---------- */
 document.querySelectorAll('[data-year]').forEach((el) => {

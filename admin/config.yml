@@ -1,0 +1,310 @@
+# Адмінка сайту (Sveltia CMS). Вхід: «Sign In Using Access Token» — див. README.
+# Після передачі репозиторію змініть repo на «новий-власник/coach-lazorko-website».
+backend:
+  name: github
+  repo: MarianPetlovanyi/coach-lazorko-website
+  branch: main
+  # лише вхід за токеном: кнопка «Sign In with GitHub» потребує окремого OAuth-сервера
+  auth_methods: [token]
+
+media_folder: assets/img/uploads
+public_folder: assets/img/uploads
+
+collections:
+  - name: content
+    label: Вміст сайту
+    editor:
+      preview: false
+    files:
+      # ---------- Контакти ----------
+      - name: settings
+        label: Контакти та налаштування
+        file: _data/settings.yml
+        fields:
+          - name: first_name
+            label: Ім’я тренера
+            widget: string
+          - name: last_name
+            label: Прізвище тренера
+            widget: string
+          - name: phone
+            label: Телефон
+            widget: string
+            hint: Так, як показувати на сайті, напр. +380 67 123 45 67
+          - name: telegram
+            label: Telegram — нікнейм без @
+            widget: string
+          - name: instagram
+            label: Instagram — нікнейм без @
+            widget: string
+          - name: stats
+            label: Цифри на головній
+            label_singular: цифру
+            widget: list
+            summary: "{{fields.value}} — {{fields.label}}"
+            fields:
+              - name: value
+                label: Значення
+                widget: string
+                hint: Напр. 15+
+              - name: label
+                label: Підпис
+                widget: string
+                hint: Напр. років досвіду
+          - name: gyms
+            label: Зали
+            label_singular: зал
+            widget: list
+            summary: "{{fields.name}} — {{fields.address}}"
+            fields:
+              - name: name
+                label: Назва
+                widget: string
+                hint: Напр. Зал №1
+              - name: address
+                label: Адреса
+                widget: string
+                hint: Напр. м. Львів, вул. Піша, 1
+              - name: map_query
+                label: Адреса для Google Maps (необов’язково)
+                widget: string
+                required: false
+                hint: Якщо мапа показує не те місце — впишіть точнішу адресу або назву закладу
+          - name: form_endpoint
+            label: Адреса форми заявок (Cloudflare Worker)
+            widget: string
+            required: false
+            hint: Напр. https://lazorko-form.назва.workers.dev — заявки приходять у Telegram. Поки порожньо, форма просить написати в Telegram. Інструкція — у README
+          - name: cf_analytics_token
+            label: Токен Cloudflare Web Analytics (статистика відвідувань)
+            widget: string
+            required: false
+            hint: Інструкція — у README
+
+      # ---------- Про тренера ----------
+      - name: about
+        label: Про тренера
+        file: _data/about.yml
+        fields:
+          - name: photo
+            label: Фото тренера
+            widget: image
+            required: false
+            hint: Бажано вертикальне (4:5)
+          - name: lead
+            label: Короткий підзаголовок
+            widget: string
+          - name: text
+            label: Розповідь про тренера
+            widget: markdown
+          - name: facts
+            label: Факти (картки під текстом)
+            label_singular: факт
+            widget: list
+            summary: "{{fields.title}}: {{fields.value}}"
+            fields:
+              - name: title
+                label: Назва
+                widget: string
+                hint: Напр. Спортивне звання
+              - name: value
+                label: Значення
+                widget: string
+                hint: Напр. Майстер спорту України
+
+      # ---------- Напрями ----------
+      - name: programs
+        label: Напрями (групи)
+        file: _data/programs.yml
+        fields:
+          - name: items
+            label: Групи
+            label_singular: групу
+            widget: list
+            summary: "{{fields.title}} ({{fields.tag}})"
+            fields:
+              - name: icon
+                label: Іконка
+                widget: select
+                options:
+                  - { label: Дитина, value: baby }
+                  - { label: Група людей, value: users }
+                  - { label: Гантель, value: dumbbell }
+                  - { label: Кубок, value: trophy }
+                  - { label: Людина, value: user }
+                  - { label: Мішень, value: target }
+                  - { label: Вогонь, value: flame }
+                  - { label: Щит, value: shield-check }
+                  - { label: Медаль, value: medal }
+              - name: tag
+                label: Позначка
+                widget: string
+                hint: Напр. 6–11 років
+              - name: title
+                label: Назва групи
+                widget: string
+              - name: text
+                label: Опис
+                widget: text
+
+      # ---------- Розклад ----------
+      - name: schedule
+        label: Розклад
+        file: _data/schedule.yml
+        fields:
+          - name: tables
+            label: Таблиці розкладу
+            label_singular: таблицю
+            widget: list
+            hint: Можна зробити окрему таблицю для кожного залу
+            summary: "{{fields.title}}"
+            fields:
+              - name: title
+                label: Заголовок таблиці (необов’язково)
+                widget: string
+                required: false
+                hint: Напр. Зал №1 — вул. Піша, 1
+              - name: rows
+                label: Групи
+                label_singular: групу
+                widget: list
+                summary: "{{fields.group}}"
+                fields:
+                  - { name: group, label: Група, widget: string }
+                  - { name: note, label: Підпис (вік), widget: string, required: false }
+                  - name: highlight
+                    label: Виділити помаранчевим
+                    widget: boolean
+                    required: false
+                    default: false
+                  - { name: mon, label: Понеділок, widget: string, required: false, hint: "Напр. 17:00 або 17:00–18:30. Порожньо — немає тренування" }
+                  - { name: tue, label: Вівторок, widget: string, required: false }
+                  - { name: wed, label: Середа, widget: string, required: false }
+                  - { name: thu, label: Четвер, widget: string, required: false }
+                  - { name: fri, label: П’ятниця, widget: string, required: false }
+                  - { name: sat, label: Субота, widget: string, required: false }
+                  - { name: sun, label: Неділя, widget: string, required: false, hint: "Стовпчик «Нд» з’явиться, лише якщо його заповнено" }
+          - name: note
+            label: Примітка під розкладом
+            widget: markdown
+            required: false
+
+      # ---------- Досягнення ----------
+      - name: achievements
+        label: Досягнення
+        file: _data/achievements.yml
+        fields:
+          - name: items
+            label: Результати
+            label_singular: результат
+            widget: list
+            summary: "{{fields.title}} — {{fields.meta}}"
+            fields:
+              - name: medal
+                label: Нагорода
+                widget: select
+                options:
+                  - { label: Золото, value: gold }
+                  - { label: Срібло, value: silver }
+                  - { label: Бронза, value: bronze }
+                  - { label: Кубок, value: trophy }
+              - name: title
+                label: Назва змагань
+                widget: string
+              - name: meta
+                label: Рік і місто
+                widget: string
+                hint: Напр. 2025 · Тернопіль
+              - name: result
+                label: Результат
+                widget: string
+                hint: Напр. 7 золотих, 5 срібних і 7 бронзових медалей
+
+      # ---------- Галерея ----------
+      - name: gallery
+        label: Галерея (фото)
+        file: _data/gallery.yml
+        fields:
+          - name: items
+            label: Фото
+            label_singular: фото
+            widget: list
+            hint: Поки список порожній, на сайті показуються заглушки
+            summary: "{{fields.alt}}"
+            fields:
+              - name: image
+                label: Фото
+                widget: image
+              - name: alt
+                label: Короткий опис фото
+                widget: string
+                required: false
+                hint: Для пошуковиків і незрячих, напр. «Тренування дитячої групи»
+
+      # ---------- Відео ----------
+      - name: videos
+        label: Відео
+        file: _data/videos.yml
+        fields:
+          - name: items
+            label: Відео
+            label_singular: відео
+            widget: list
+            hint: Поки список порожній, на сайті показуються заглушки
+            summary: "{{fields.title}}"
+            fields:
+              - name: url
+                label: Посилання
+                widget: string
+                hint: YouTube (звичайне відео або Shorts) — грає прямо на сайті. Instagram Reels — відкриється в Instagram
+              - name: title
+                label: Назва
+                widget: string
+              - name: vertical
+                label: Вертикальне відео
+                widget: boolean
+                required: false
+                default: false
+                hint: Для Shorts і Reels визначається автоматично
+
+      # ---------- Відгуки ----------
+      - name: reviews
+        label: Відгуки
+        file: _data/reviews.yml
+        fields:
+          - name: items
+            label: Відгуки
+            label_singular: відгук
+            widget: list
+            hint: Лише справжні відгуки, з дозволу авторів
+            summary: "{{fields.name}} — {{fields.role}}"
+            fields:
+              - name: name
+                label: Ім’я
+                widget: string
+              - name: role
+                label: Хто це
+                widget: string
+                required: false
+                hint: Напр. мама Остапа, 8 років
+              - name: text
+                label: Текст відгуку
+                widget: text
+
+      # ---------- Питання ----------
+      - name: faq
+        label: Часті питання
+        file: _data/faq.yml
+        fields:
+          - name: items
+            label: Питання
+            label_singular: питання
+            widget: list
+            summary: "{{fields.question}}"
+            fields:
+              - name: question
+                label: Питання
+                widget: string
+              - name: answer
+                label: Відповідь
+                widget: markdown

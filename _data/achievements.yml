@@ -1,0 +1,17 @@
+items:
+  - medal: gold
+    title: Назва змагань
+    meta: Рік · місто
+    result: Результат буде додано
+  - medal: silver
+    title: Назва змагань
+    meta: Рік · місто
+    result: Результат буде додано
+  - medal: bronze
+    title: Назва змагань
+    meta: Рік · місто
+    result: Результат буде додано
+  - medal: trophy
+    title: Назва змагань
+    meta: Рік · місто
+    result: Результат буде додано

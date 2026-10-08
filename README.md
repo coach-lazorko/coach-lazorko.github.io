@@ -1,69 +1,95 @@
 # Ярема Лазорко — кікбоксинг WAKO (Львів)
 
-Static one-page site for GitHub Pages: plain HTML/CSS/JS, no build step.
-Style follows the Golden Lion club logo: orange grunge "sun", black kicker silhouette, cream paper background, heavy display type.
+Односторінковий сайт тренера з адмінкою для редагування вмісту без коду.
+
+---
+
+## Як редагувати сайт (для тренера)
+
+1. Відкрийте **`адреса-сайту/admin/`** (напр. `https://<нікнейм>.github.io/coach-lazorko-website/admin/`).
+2. Натисніть **Sign In Using Access Token**. Перший раз потрібно створити токен:
+   - натисніть посилання в підказці (або відкрийте GitHub → Settings → Developer settings → **Fine-grained tokens** → Generate new token);
+   - **Repository access** → *Only select repositories* → `coach-lazorko-website`;
+   - **Permissions → Contents** → *Read and write*;
+   - строк дії — до 1 року; скопіюйте токен і вставте в адмінку.
+   Браузер запам’ятає вхід. Токен нікому не передавайте.
+3. Ліворуч оберіть розділ (Контакти, Розклад, Відео, Відгуки…), змініть і натисніть **Save**.
+4. Через 1–2 хвилини зміни з’являться на сайті.
+
+Що можна змінити в адмінці: ім’я, телефон, Telegram, Instagram, цифри на головній, адреси залів, текст і фото «Про тренера», групи, розклад (можна окрему таблицю на кожен зал), досягнення, фото галереї, відео, відгуки, часті питання.
+
+**Відео:** вставте посилання на YouTube (звичайне відео або Shorts) — воно гратиме прямо на сайті. Посилання на Instagram Reels відкриється в Instagram (Instagram не дає вбудовувати відео акуратно). Можна також завантажити файл `.mp4` у `assets/video/` і вказати шлях `assets/video/назва.mp4`, але великі файли краще викладати на YouTube.
+
+---
+
+## For developers
+
+Static site built by **Jekyll on GitHub Pages** (no build step on your side):
 
 ```
-index.html            page (all text is here, in Ukrainian)
+index.html            page template (Liquid); all editable content comes from _data/
+_data/*.yml           content: settings, about, programs, schedule, achievements,
+                      gallery, videos, reviews, faq
+_includes/icons.html  SVG icon sprite
+admin/                Sveltia CMS (Decap-compatible): index.html + config.yml
 assets/css/style.css  styles (colors are CSS variables at the top)
-assets/js/main.js     mobile menu, scroll effects, contact form
-assets/img/           logo.jpg, emblem.svg, favicon.svg
-.nojekyll             tells GitHub Pages to serve files as-is
+assets/js/main.js     menu, scroll effects, contact form, video cards + popup player
+assets/img/           logo.jpg, emblem.svg, favicon.svg, uploads/ (CMS media)
+cloudflare/           Worker that sends form applications to Telegram (not published)
 ```
 
-## Preview locally
+### Preview locally
+
+The page is a Jekyll template, so open it through Jekyll (Docker, same versions as GitHub Pages):
 
 ```bash
-python3 -m http.server 8000   # then open http://localhost:8000
+docker run --rm -it -p 4000:4000 -v "$PWD":/srv -w /srv ruby:3.3 \
+  sh -c "gem install github-pages --no-document && jekyll serve -H 0.0.0.0"
+# → http://localhost:4000
 ```
 
-## Deploy to GitHub Pages
+### Deploy
 
-```bash
-git init && git add . && git commit -m "Initial site"
-git branch -M main
-git remote add origin https://github.com/<user>/<repo>.git
-git push -u origin main
-```
+**Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)`**. GitHub builds the Jekyll site on every push, including saves from the admin.
 
-On GitHub, open **Settings → Pages → Build and deployment**, choose **Deploy from a branch**, pick `main` and `/ (root)`, then save. The site will be served at `https://<user>.github.io/<repo>/`.
+### Admin (Sveltia CMS)
 
-## Fill in the content
+- Sign-in uses a fine-grained personal access token (Contents: read/write), so no OAuth server is needed. For a "Sign in with GitHub" button instead, deploy [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) on Cloudflare Workers and set `backend.base_url` in `admin/config.yml`.
+- **After transferring the repo**, change `backend.repo` in `admin/config.yml` to `<new-owner>/coach-lazorko-website`.
+- The CMS version is pinned in `admin/index.html`. Bump it to update.
+- Edits are commits by the signed-in user. Uploaded images go to `assets/img/uploads/`.
 
-Already filled in: coach name (Ярема Лазорко), Instagram [@coach_lazorko](https://www.instagram.com/coach_lazorko/), Telegram [@Onionmm](https://t.me/Onionmm).
+### Contact form → Telegram (Cloudflare Worker)
 
-Every remaining spot has a `<!-- TODO -->` comment in `index.html`:
+Applications from the site form go to a small Cloudflare Worker (`cloudflare/form-to-telegram/worker.js`), which sends them to a Telegram bot. It's free (Workers free plan: 100k requests a day) and has no monthly cap. It has a spam trap and only accepts requests from the site's address.
 
-| Placeholder | Replace with |
-|---|---|
-| `+380000000000` / `+380 00 000 00 00` | phone number (link form / display form) |
-| `XX+`, `XXX+`, `XX` in the hero | real stats |
-| `--:--` in the schedule | training times |
-| "Назва змагань" cards | real competition results |
-| Gallery `.ph` placeholders | `<img src="assets/img/photo-1.jpg" alt="...">` inside each `<figure>` |
-| Coach photo placeholder | `<img class="coach-photo" src="assets/img/coach.jpg" alt="...">` |
+1. **Bot:** in Telegram, open [@BotFather](https://t.me/BotFather) → `/newbot` → copy the token. Then open the new bot and press **Start**.
+2. **Worker:** [dash.cloudflare.com](https://dash.cloudflare.com) (free account) → **Workers & Pages → Create → Start with Hello World** → name it `lazorko-form` → **Deploy** → **Edit code** → replace everything with `worker.js` → **Deploy**.
+   *(Or from a terminal: `cd cloudflare/form-to-telegram && npx wrangler deploy`.)*
+3. **Settings → Variables and Secrets:**
+   - `TELEGRAM_BOT_TOKEN` (Secret) = the bot token;
+   - open the Worker URL in a browser: it lists the chat IDs of everyone who pressed Start → add `TELEGRAM_CHAT_ID` (Secret). Use commas for several recipients, e.g. the coach and a group;
+   - `ALLOWED_ORIGINS` (Text) = the site address, e.g. `https://<user>.github.io` (add a custom domain here later).
+   Opening the Worker URL again should say «✅ Форма працює».
+4. Paste the Worker URL (`https://lazorko-form.<account>.workers.dev`) into the admin: **Контакти та налаштування → Адреса форми заявок**.
 
-**Logo:** the hero shows the original Golden Lion logo (`assets/img/logo.jpg`). The header, footer and favicon use the simplified `emblem.svg` / `favicon.svg`, because they stay readable at small sizes.
+Until step 4, submitting the form shows a message asking visitors to write in Telegram.
 
-## Contact form
+### Visitor statistics (Cloudflare Web Analytics)
 
-GitHub Pages can't process forms itself, so the form posts to [Formspree](https://formspree.io), which has a free tier:
+Free and unlimited, with no cookies. It shows visits, pages, referrers, countries and devices, but not button clicks.
 
-1. Sign up, create a form, and copy its ID (e.g. `xyzabcd`).
-2. In `index.html`, replace `YOUR_FORM_ID` in `action="https://formspree.io/f/YOUR_FORM_ID"`.
-3. Submissions will arrive by email. Formspree asks you to confirm the first one.
+1. Cloudflare dashboard → **Analytics & Logs → Web Analytics → Add a site** → enter the site's hostname (e.g. `<user>.github.io`, or the custom domain) → choose the **JS snippet** option.
+2. Copy the `token` value from the snippet and paste it into the admin: **Контакти та налаштування → Токен Cloudflare Web Analytics**. The script is only included once the token is set.
 
-Until the ID is set, submitting shows a message asking visitors to write in Telegram.
+### Maps
 
-## Maps / addresses
+Each gym in `settings.yml → gyms` gets its own Google Map (embed, no API key) and a route button. If the pin lands in the wrong place, fill in `map_query` with a more precise address.
 
-There are two gyms, each with its own map and "Маршрут" (route) button in the contacts section:
+### Still placeholders
 
-1. **Зал №1** — вул. Піша, 1, Львів
-2. **Зал №2** — вул. Замарстинівська, 49, Львів
-
-To change an address, URL-encode it and replace the text after `q=` in that map's `<iframe src>` and after `destination=` in its "Маршрут" link. Then update the address text in the contacts list and on the map card.
+Phone, hero stats (`XX+`), coach photo and bio facts, schedule times (`--:--`), achievements, gallery photos, videos, reviews. All of these are editable in the admin. Still to set up: the Telegram form Worker and the Cloudflare Web Analytics token.
 
 ## Credits
 
-Kicker silhouette: [game-icons.net](https://game-icons.net) "High kick" (CC BY 3.0). The attribution is in the footer. UI icons: [Lucide](https://lucide.dev) (ISC). Brand icons: [Simple Icons](https://simpleicons.org) (CC0). Fonts: Russo One and Rubik (Google Fonts).
+Kicker silhouette: [game-icons.net](https://game-icons.net) "High kick" (CC BY 3.0). The attribution is in the footer. UI icons: [Lucide](https://lucide.dev) (ISC). Brand icons: [Simple Icons](https://simpleicons.org) (CC0). Fonts: Russo One and Rubik (Google Fonts). CMS: [Sveltia CMS](https://github.com/sveltia/sveltia-cms) (MIT).
