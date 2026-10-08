@@ -12,7 +12,8 @@
    - **Repository access** → *Only select repositories* → `coach-lazorko-website`;
    - **Permissions → Contents** → *Read and write*;
    - строк дії — до 1 року; скопіюйте токен і вставте в адмінку.
-   Браузер запам’ятає вхід. Токен нікому не передавайте.
+   Браузер запам’ятає вхід. Токен нікому не передавайте й не входьте в адмінку на чужих комп’ютерах.
+   Якщо загубили телефон чи ноутбук — видаліть токен на GitHub (Settings → Developer settings → Fine-grained tokens).
 3. Ліворуч оберіть розділ (Контакти, Розклад, Відео, Відгуки…), змініть і натисніть **Save**.
 4. Через 1–2 хвилини зміни з’являться на сайті.
 
@@ -89,6 +90,17 @@ Each gym in `settings.yml → gyms` gets its own Google Map (embed, no API key) 
 ### Still placeholders
 
 Phone, hero stats (`XX+`), coach photo and bio facts, schedule times (`--:--`), achievements, gallery photos, videos, reviews. All of these are editable in the admin. Still to set up: the Telegram form Worker and the Cloudflare Web Analytics token.
+
+### Security
+
+- **No server or database.** The site is static files. Whoever controls a GitHub account with write access controls the site, so turn on **2FA** for those GitHub accounts and for the Cloudflare account.
+- **Admin token:** fine-grained, this repo only, Contents read/write, expires within a year. It's kept in the browser, so don't use the admin on shared computers, and revoke the token if a device is lost. Any unwanted change can be undone from git history.
+- **Admin script** is pinned with Subresource Integrity. When bumping the Sveltia version in `admin/index.html`, recompute the hash:
+  `curl -sL https://unpkg.com/@sveltia/cms@<version>/dist/sveltia-cms.js | openssl dgst -sha384 -binary | openssl base64 -A`
+- **github.io origin:** all Pages sites of one account share the origin `<user>.github.io`, so another Pages site on the same account could read the admin token. A custom domain isolates it. Until then, don't host untrusted Pages sites on the owner's account.
+- **Never commit secrets.** This repo is public. Bot token and chat ID live only in Cloudflare's Worker secrets. If the bot token leaks, revoke it in @BotFather (`/revoke`).
+- **Form Worker:** spam trap, origin check, field and size limits. Scripts can fake the origin, so if spam shows up, add [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) (free). While `TELEGRAM_CHAT_ID` is unset, the Worker URL lists names and IDs of whoever messaged the bot, so finish setup right away.
+- **Personal data:** applications (names, phones, children's ages) are stored only in the Telegram chat that receives them. Keep that chat limited to the coach.
 
 ## Credits
 

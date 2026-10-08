@@ -8,7 +8,10 @@
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
 </head>
 <body>
-  <!-- Sveltia CMS (сумісна з Decap CMS). Налаштування полів — у admin/config.yml -->
-  <script src="https://unpkg.com/@sveltia/cms@0.218.3/dist/sveltia-cms.js"></script>
+  <!-- Sveltia CMS (сумісна з Decap CMS). Налаштування полів — у admin/config.yml.
+       integrity — відбиток файлу: браузер не запустить підмінений скрипт.
+       Оновлюючи версію, оновіть і відбиток (див. README). -->
+  <script src="https://unpkg.com/@sveltia/cms@0.218.3/dist/sveltia-cms.js"
+          integrity="sha384-e7XprdmCWh1yj+hh6iu3tXgknMI7xbGIx+iDJZq3y6XMjDGDO3+HiCO0PHT+eyF2" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -127,7 +127,7 @@ function parseVideo(url) {
     const m = u.pathname.match(/^\/(p|reels?|tv)\/([\w-]+)/);
     if (m) return { type: 'instagram', url: `https://www.instagram.com/${m[1] === 'p' ? 'p' : 'reel'}/${m[2]}/`, vertical: true };
   }
-  if (/\.(mp4|webm|mov|m4v)$/i.test(u.pathname)) return { type: 'file', src: u.href };
+  if (/^https?:$/.test(u.protocol) && /\.(mp4|webm|mov|m4v)$/i.test(u.pathname)) return { type: 'file', src: u.href };
   return null;
 }
 

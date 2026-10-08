@@ -20,6 +20,7 @@ const FIELDS = [
   ['message', '📝 Коментар'],
 ];
 const MAX_FIELD_LENGTH = 1000;
+const MAX_BODY_BYTES = 20_000;
 
 export default {
   async fetch(request, env) {
@@ -31,6 +32,9 @@ export default {
     if (request.method === 'GET') return statusPage(env);
     if (request.method !== 'POST') return json({ ok: false, error: 'Method not allowed' }, 405, cors.headers);
     if (!cors.allowed) return json({ ok: false, error: 'Origin not allowed' }, 403, cors.headers);
+    if (Number(request.headers.get('Content-Length')) > MAX_BODY_BYTES) {
+      return json({ ok: false, error: 'Too large' }, 413, cors.headers);
+    }
 
     let data;
     try {
