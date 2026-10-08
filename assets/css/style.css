@@ -626,15 +626,18 @@ p { margin: 0 0 1em; }
   -webkit-overflow-scrolling: touch;
 }
 .schedule-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin: 0 0 16px;
   font-family: var(--font-display);
   font-size: clamp(20px, 2.4vw, 26px);
   text-transform: uppercase;
 }
+.schedule-title svg { width: 24px; height: 24px; flex: none; color: var(--orange-deep); }
 .table-wrap + .schedule-title { margin-top: 40px; }
 .schedule {
   width: 100%;
-  min-width: 720px;
   border-collapse: collapse;
   text-align: center;
 }
@@ -1402,6 +1405,11 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .faq__answer { padding-right: 0; }
 
   .form__row { grid-template-columns: 1fr; gap: 0; }
+
+  .schedule tbody th { padding: 14px 12px; white-space: normal; }
+  .schedule thead th:first-child { padding-left: 12px; }
+  .schedule td { padding: 10px 4px; }
+  .slot { min-width: 0; padding: 7px 8px; }
 
   .map__card { left: 12px; right: 12px; bottom: 12px; max-width: none; flex-wrap: wrap; }
   .map__card .btn { width: 100%; }

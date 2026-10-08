@@ -244,18 +244,26 @@ layout: null
 
         {%- if has_times %}
         {%- for table in site.data.schedule.tables %}
-        {%- assign day_count = 6 %}
-        {%- for row in table.rows %}{% if row.sun and row.sun != "" %}{% assign day_count = 7 %}{% endif %}{% endfor %}
+        {%- comment %} Лише дні, коли в цьому залі є тренування (якщо таблиця порожня — Пн–Сб) {% endcomment %}
+        {%- assign active = "" %}
+        {%- for d in days %}
+          {%- assign di = forloop.index0 %}
+          {%- assign day_used = false %}
+          {%- for row in table.rows %}{% assign t = row[d] | strip %}{% if t != "" %}{% assign day_used = true %}{% endif %}{% endfor %}
+          {%- if day_used %}{% assign active = active | append: di | append: "," %}{% endif %}
+        {%- endfor %}
+        {%- if active == "" %}{% assign active = "0,1,2,3,4,5" %}{% endif %}
+        {%- assign active_days = active | split: "," %}
         {%- if table.title and table.title != "" %}
-        <h3 class="schedule-title reveal">{{ table.title | escape }}</h3>
+        <h3 class="schedule-title reveal"><svg aria-hidden="true"><use href="#i-map-pin"/></svg>{{ table.title | escape }}</h3>
         {%- endif %}
         <div class="table-wrap reveal">
           <table class="schedule">
             <thead>
               <tr>
                 <th scope="col">Група</th>
-                {%- for d in day_names limit: day_count %}
-                <th scope="col">{{ d }}</th>
+                {%- for i in active_days %}{% assign n = i | plus: 0 %}
+                <th scope="col">{{ day_names[n] }}</th>
                 {%- endfor %}
               </tr>
             </thead>
@@ -266,10 +274,10 @@ layout: null
               <tr>
                 <th scope="row">{{ row.group | escape }}{% if row.note and row.note != "" %} <small>{{ row.note | escape }}</small>{% endif %}</th>
                 {%- unless row_has_times %}
-                <td class="ask" colspan="{{ day_count }}">Час уточнюйте в <a href="{{ tg_url }}" target="_blank" rel="noopener">Telegram</a></td>
+                <td class="ask" colspan="{{ active_days.size }}">Час уточнюйте в <a href="{{ tg_url }}" target="_blank" rel="noopener">Telegram</a></td>
                 {%- endunless %}
                 {%- if row_has_times %}
-                {%- for d in days limit: day_count %}
+                {%- for i in active_days %}{% assign n = i | plus: 0 %}{% assign d = days[n] %}
                 {%- assign t = row[d] | strip %}
                 {%- if t != "" %}
                 <td><span class="slot{% if row.highlight %} slot--hot{% endif %}">{{ t | escape }}</span></td>
@@ -297,8 +305,13 @@ layout: null
             <h3>Розклад оновлюється</h3>
             <p>Напишіть нам — підкажемо час тренувань для вашої групи та залу.</p>
             <ul class="schedule-empty__groups">
+              {%- assign seen = "|" %}
               {%- for table in site.data.schedule.tables %}{% for row in table.rows %}
+              {%- assign key = "|" | append: row.group | append: "|" %}
+              {%- unless seen contains key %}
               <li>{{ row.group | escape }}{% if row.note and row.note != "" %} · {{ row.note | escape }}{% endif %}</li>
+              {%- assign seen = seen | append: row.group | append: "|" %}
+              {%- endunless %}
               {%- endfor %}{% endfor %}
             </ul>
           </div>
