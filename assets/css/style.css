@@ -672,10 +672,11 @@ p { margin: 0 0 1em; }
   border-radius: 8px;
   background: var(--paper-2);
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
 }
 .slot--hot { background: var(--orange); }
 .empty { color: rgba(20, 18, 16, .25); }
+.schedule td.ask { color: var(--muted); font-size: 15px; }
+.schedule td.ask a { color: var(--ink); font-weight: 500; text-decoration-color: var(--orange); text-decoration-thickness: 2px; }
 .schedule-empty {
   display: grid;
   grid-template-columns: auto 1fr auto;

@@ -261,8 +261,14 @@ layout: null
             </thead>
             <tbody>
               {%- for row in table.rows %}
+              {%- assign row_has_times = false %}
+              {%- for d in days %}{% assign t = row[d] | strip %}{% if t != "" %}{% assign row_has_times = true %}{% endif %}{% endfor %}
               <tr>
                 <th scope="row">{{ row.group | escape }}{% if row.note and row.note != "" %} <small>{{ row.note | escape }}</small>{% endif %}</th>
+                {%- unless row_has_times %}
+                <td class="ask" colspan="{{ day_count }}">Час уточнюйте в <a href="{{ tg_url }}" target="_blank" rel="noopener">Telegram</a></td>
+                {%- endunless %}
+                {%- if row_has_times %}
                 {%- for d in days limit: day_count %}
                 {%- assign t = row[d] | strip %}
                 {%- if t != "" %}
@@ -271,6 +277,7 @@ layout: null
                 <td class="empty">—</td>
                 {%- endif %}
                 {%- endfor %}
+                {%- endif %}
               </tr>
               {%- endfor %}
             </tbody>

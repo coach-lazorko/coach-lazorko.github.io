@@ -178,13 +178,13 @@ collections:
                     widget: boolean
                     required: false
                     default: false
-                  - { name: mon, label: Понеділок, widget: string, required: false, hint: "Напр. 17:00 або 17:00–18:30. Порожньо — немає тренування" }
-                  - { name: tue, label: Вівторок, widget: string, required: false }
-                  - { name: wed, label: Середа, widget: string, required: false }
-                  - { name: thu, label: Четвер, widget: string, required: false }
-                  - { name: fri, label: П’ятниця, widget: string, required: false }
-                  - { name: sat, label: Субота, widget: string, required: false }
-                  - { name: sun, label: Неділя, widget: string, required: false, hint: "Стовпчик «Нд» з’явиться, лише якщо його заповнено" }
+                  - { name: mon, label: Понеділок, widget: string, required: false, hint: "Напр. 17:00 або 17:00–18:30. Порожньо — немає тренування", pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
+                  - { name: tue, label: Вівторок, widget: string, required: false, pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
+                  - { name: wed, label: Середа, widget: string, required: false, pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
+                  - { name: thu, label: Четвер, widget: string, required: false, pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
+                  - { name: fri, label: П’ятниця, widget: string, required: false, pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
+                  - { name: sat, label: Субота, widget: string, required: false, pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
+                  - { name: sun, label: Неділя, widget: string, required: false, hint: "Стовпчик «Нд» з’явиться, лише якщо його заповнено", pattern: ['^(\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?(\s*,\s*\d{1,2}:\d{2}(\s*[–-]\s*\d{1,2}:\d{2})?)*)?$', 'Формат: 17:00, 17:00–18:30 або кілька через кому'] }
           - name: note
             label: Примітка під розкладом
             widget: markdown
