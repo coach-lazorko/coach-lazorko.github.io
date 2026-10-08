@@ -104,4 +104,4 @@ Phone, hero stats (`XX+`), coach photo and bio facts, schedule times (`--:--`), 
 
 ## Credits
 
-Kicker silhouette: [game-icons.net](https://game-icons.net) "High kick" (CC BY 3.0). The attribution is in the footer. UI icons: [Lucide](https://lucide.dev) (ISC). Brand icons: [Simple Icons](https://simpleicons.org) (CC0). Fonts: Russo One and Rubik (Google Fonts). CMS: [Sveltia CMS](https://github.com/sveltia/sveltia-cms) (MIT).
+Kicker silhouette: [game-icons.net](https://game-icons.net) "High kick" (CC BY 3.0). The attribution is in the footer. UI icons: [Lucide](https://lucide.dev) (ISC). Brand icons: [Simple Icons](https://simpleicons.org) (CC0). Fonts: [Fixel](https://github.com/MacPaw/Fixel) by MacPaw, Kyiv (OFL-1.1), self-hosted in `assets/fonts/`. CMS: [Sveltia CMS](https://github.com/sveltia/sveltia-cms) (MIT).

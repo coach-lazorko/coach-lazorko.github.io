@@ -1,3 +1,29 @@
+/* Шрифт Fixel (MacPaw, Київ), SIL Open Font License — assets/fonts/OFL-Fixel.txt */
+@font-face {
+  font-family: "Fixel Display";
+  src: url("../fonts/FixelDisplay-Black.woff2") format("woff2");
+  font-weight: 100 900; /* одне накреслення (Black) для всіх заголовків */
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fixel Text";
+  src: url("../fonts/FixelText-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fixel Text";
+  src: url("../fonts/FixelText-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fixel Text";
+  src: url("../fonts/FixelText-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+
 /* =========================================================
    Тренер Лазорко — кікбоксинг WAKO
    Стиль: Golden Lion — помаранчеве «сонце», чорний силует,
@@ -25,8 +51,8 @@
   --radius-sm: 10px;
   --shadow: 0 24px 60px -28px rgba(20, 18, 16, .45);
 
-  --font-display: "Russo One", "Arial Black", Impact, sans-serif;
-  --font-body: "Rubik", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Fixel Display", "Arial Black", Impact, sans-serif;
+  --font-body: "Fixel Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
   --container: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
