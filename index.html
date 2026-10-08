@@ -12,6 +12,11 @@ layout: null
 {%- assign ig = s.instagram | remove: "@" -%}
 {%- assign ig_url = "https://www.instagram.com/" | append: ig | append: "/" -%}
 {%- assign tel = s.phone | remove: " " | remove: "(" | remove: ")" | remove: "-" -%}
+{%- comment -%} Порожні розділи (досягнення, галерея, відео, відгуки) не показуються, поки в адмінці нічого не додано {%- endcomment -%}
+{%- assign has_achievements = false -%}{%- if site.data.achievements.items.size > 0 -%}{%- assign has_achievements = true -%}{%- endif -%}
+{%- assign has_gallery = false -%}{%- if site.data.gallery.items.size > 0 -%}{%- assign has_gallery = true -%}{%- endif -%}
+{%- assign has_videos = false -%}{%- if site.data.videos.items.size > 0 -%}{%- assign has_videos = true -%}{%- endif -%}
+{%- assign has_reviews = false -%}{%- if site.data.reviews.items.size > 0 -%}{%- assign has_reviews = true -%}{%- endif -%}
 <!doctype html>
 <html lang="uk">
 <head>
@@ -54,9 +59,15 @@ layout: null
         <a href="#about">Тренер</a>
         <a href="#programs">Напрями</a>
         <a href="#schedule">Розклад</a>
+        {%- if has_achievements %}
         <a href="#achievements">Досягнення</a>
+        {%- endif %}
+        {%- if has_videos %}
         <a href="#videos">Відео</a>
+        {%- endif %}
+        {%- if has_reviews %}
         <a href="#reviews">Відгуки</a>
+        {%- endif %}
         <a href="#faq">Питання</a>
         <a href="#contacts">Контакти</a>
         <a class="btn btn--primary nav__cta" href="#contacts">Записатися</a>
@@ -118,7 +129,7 @@ layout: null
 
     <!-- ============ ABOUT ============ -->
     {%- assign about = site.data.about %}
-    {%- assign fact_icons = "medal,shield-check,clock,trophy" | split: "," %}
+    {%- assign fact_icons = "medal,map-pin,users,user" | split: "," %}
     <section class="section" id="about">
       <div class="container about">
         <div class="about__media reveal">
@@ -127,7 +138,6 @@ layout: null
           {%- else %}
           <div class="photo-placeholder">
             <img src="assets/img/emblem.svg" alt="">
-            <span>Фото тренера</span>
           </div>
           {%- endif %}
           <div class="about__badge">
@@ -227,6 +237,12 @@ layout: null
           <h2 class="h2">Розклад <span class="mark">тренувань</span></h2>
         </div>
 
+        {%- assign has_times = false %}
+        {%- for table in site.data.schedule.tables %}{% for row in table.rows %}{% for d in days %}
+          {%- assign t = row[d] | strip %}{% if t != "" %}{% assign has_times = true %}{% endif %}
+        {%- endfor %}{% endfor %}{% endfor %}
+
+        {%- if has_times %}
         {%- for table in site.data.schedule.tables %}
         {%- assign day_count = 6 %}
         {%- for row in table.rows %}{% if row.sun and row.sun != "" %}{% assign day_count = 7 %}{% endif %}{% endfor %}
@@ -267,10 +283,29 @@ layout: null
           <span>{{ site.data.schedule.note | markdownify | remove: "<p>" | remove: "</p>" | strip }}</span>
         </p>
         {%- endif %}
+        {%- else %}
+        <div class="schedule-empty reveal">
+          <span class="icon-badge"><svg><use href="#i-clock"/></svg></span>
+          <div class="schedule-empty__body">
+            <h3>Розклад оновлюється</h3>
+            <p>Напишіть нам — підкажемо час тренувань для вашої групи та залу.</p>
+            <ul class="schedule-empty__groups">
+              {%- for table in site.data.schedule.tables %}{% for row in table.rows %}
+              <li>{{ row.group | escape }}{% if row.note and row.note != "" %} · {{ row.note | escape }}{% endif %}</li>
+              {%- endfor %}{% endfor %}
+            </ul>
+          </div>
+          <a class="btn btn--primary" href="{{ tg_url }}" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-telegram"/></svg>
+            Дізнатися розклад
+          </a>
+        </div>
+        {%- endif %}
       </div>
     </section>
 
     <!-- ============ ACHIEVEMENTS ============ -->
+    {%- if has_achievements %}
     <section class="section section--orange" id="achievements">
       <div class="container">
         <div class="section-head reveal">
@@ -292,8 +327,10 @@ layout: null
         </div>
       </div>
     </section>
+    {%- endif %}
 
     <!-- ============ GALLERY ============ -->
+    {%- if has_gallery %}
     <section class="section" id="gallery">
       <div class="container">
         <div class="section-head section-head--row reveal">
@@ -308,21 +345,16 @@ layout: null
         </div>
 
         <div class="gallery">
-          {%- if site.data.gallery.items and site.data.gallery.items.size > 0 %}
           {%- for photo in site.data.gallery.items %}
           <figure class="gallery__item reveal"><img src="{{ photo.image | relative_url }}" alt="{{ photo.alt | default: 'Фото з тренувань' | escape }}" loading="lazy"></figure>
           {%- endfor %}
-          {%- else %}
-          {%- assign ph_labels = "Фото з тренувань,Фото,Фото,Фото зі змагань,Фото,Фото,Фото" | split: "," %}
-          {%- for label in ph_labels %}
-          <figure class="gallery__item reveal"><div class="ph"><svg><use href="#i-camera"/></svg><span>{{ label }}</span></div></figure>
-          {%- endfor %}
-          {%- endif %}
         </div>
       </div>
     </section>
+    {%- endif %}
 
     <!-- ============ VIDEOS ============ -->
+    {%- if has_videos %}
     <section class="section section--dark" id="videos">
       <div class="container">
         <div class="section-head section-head--row reveal">
@@ -337,23 +369,18 @@ layout: null
         </div>
 
         <div class="videos">
-          {%- if site.data.videos.items and site.data.videos.items.size > 0 %}
           {%- for v in site.data.videos.items %}
           <figure class="video reveal" data-video="{{ v.url | strip | escape }}" data-title="{{ v.title | escape }}"{% if v.vertical %} data-vertical{% endif %}>
             <div class="ph"><svg><use href="#i-video"/></svg><span>{{ v.title | default: "Відео" | escape }}</span></div>
           </figure>
           {%- endfor %}
-          {%- else %}
-          <figure class="video reveal"><div class="ph"><svg><use href="#i-video"/></svg><span>Відео буде додано</span></div></figure>
-          <figure class="video reveal" data-vertical><div class="ph"><svg><use href="#i-video"/></svg><span>Reels</span></div></figure>
-          <figure class="video reveal" data-vertical><div class="ph"><svg><use href="#i-video"/></svg><span>Reels</span></div></figure>
-          <figure class="video reveal" data-vertical><div class="ph"><svg><use href="#i-video"/></svg><span>Reels</span></div></figure>
-          {%- endif %}
         </div>
       </div>
     </section>
+    {%- endif %}
 
     <!-- ============ REVIEWS ============ -->
+    {%- if has_reviews %}
     <section class="section section--alt" id="reviews">
       <div class="container">
         <div class="section-head reveal">
@@ -374,6 +401,7 @@ layout: null
         </div>
       </div>
     </section>
+    {%- endif %}
 
     <!-- ============ FAQ ============ -->
     <section class="section" id="faq">
@@ -412,10 +440,12 @@ layout: null
             </p>
 
             <ul class="contact-list">
+              {%- if tel != "" %}
               <li>
                 <span class="icon-badge"><svg><use href="#i-phone"/></svg></span>
                 <div><small>Телефон</small><a href="tel:{{ tel }}">{{ s.phone | escape }}</a></div>
               </li>
+              {%- endif %}
               <li>
                 <span class="icon-badge"><svg><use href="#i-telegram"/></svg></span>
                 <div><small>Telegram</small><a href="{{ tg_url }}" target="_blank" rel="noopener">@{{ tg }}</a></div>
@@ -555,10 +585,18 @@ layout: null
         <a href="#about">Про тренера</a>
         <a href="#programs">Напрями</a>
         <a href="#schedule">Розклад</a>
+        {%- if has_achievements %}
         <a href="#achievements">Досягнення</a>
+        {%- endif %}
+        {%- if has_gallery %}
         <a href="#gallery">Галерея</a>
+        {%- endif %}
+        {%- if has_videos %}
         <a href="#videos">Відео</a>
+        {%- endif %}
+        {%- if has_reviews %}
         <a href="#reviews">Відгуки</a>
+        {%- endif %}
         <a href="#faq">Питання</a>
         <a href="#contacts">Контакти</a>
       </nav>
@@ -570,9 +608,11 @@ layout: null
         <a href="{{ tg_url }}" target="_blank" rel="noopener" aria-label="Telegram">
           <svg><use href="#i-telegram"/></svg>
         </a>
+        {%- if tel != "" %}
         <a href="tel:{{ tel }}" aria-label="Зателефонувати">
           <svg><use href="#i-phone"/></svg>
         </a>
+        {%- endif %}
       </div>
     </div>
     <div class="container footer__bottom">

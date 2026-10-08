@@ -30,7 +30,8 @@ collections:
           - name: phone
             label: Телефон
             widget: string
-            hint: Так, як показувати на сайті, напр. +380 67 123 45 67
+            required: false
+            hint: Так, як показувати на сайті, напр. +380 67 123 45 67. Порожньо — телефон не показується
           - name: telegram
             label: Telegram — нікнейм без @
             widget: string
@@ -198,6 +199,7 @@ collections:
             label: Результати
             label_singular: результат
             widget: list
+            hint: Поки список порожній, цей розділ на сайті приховано
             summary: "{{fields.title}} — {{fields.meta}}"
             fields:
               - name: medal
@@ -218,7 +220,7 @@ collections:
               - name: result
                 label: Результат
                 widget: string
-                hint: Напр. 7 золотих, 5 срібних і 7 бронзових медалей
+                hint: Напр. 1 місце, вагова категорія до 63 кг
 
       # ---------- Галерея ----------
       - name: gallery
@@ -229,7 +231,7 @@ collections:
             label: Фото
             label_singular: фото
             widget: list
-            hint: Поки список порожній, на сайті показуються заглушки
+            hint: Поки список порожній, цей розділ на сайті приховано
             summary: "{{fields.alt}}"
             fields:
               - name: image
@@ -250,7 +252,7 @@ collections:
             label: Відео
             label_singular: відео
             widget: list
-            hint: Поки список порожній, на сайті показуються заглушки
+            hint: Поки список порожній, цей розділ на сайті приховано
             summary: "{{fields.title}}"
             fields:
               - name: url
@@ -276,7 +278,7 @@ collections:
             label: Відгуки
             label_singular: відгук
             widget: list
-            hint: Лише справжні відгуки, з дозволу авторів
+            hint: Лише справжні відгуки, з дозволу авторів. Поки список порожній, розділ на сайті приховано
             summary: "{{fields.name}} — {{fields.role}}"
             fields:
               - name: name

@@ -1,20 +1,19 @@
-# Редагується в адмінці: /admin → «Контакти та налаштування»
 first_name: Ярема
 last_name: Лазорко
-phone: "+380 00 000 00 00"
+phone: ''
 telegram: Onionmm
 instagram: coach_lazorko
 stats:
-  - value: XX+
-    label: років досвіду
-  - value: XXX+
-    label: вихованців
-  - value: XX
-    label: медалей учнів
+- value: WAKO
+  label: правила та змагання
+- value: '2'
+  label: зали у Львові
+- value: '5'
+  label: напрямів тренувань
 gyms:
-  - name: Зал №1
-    address: м. Львів, вул. Піша, 1
-  - name: Зал №2
-    address: м. Львів, вул. Замарстинівська, 49
-form_endpoint: ""
-cf_analytics_token: ""
+- name: Зал №1
+  address: м. Львів, вул. Піша, 1
+- name: Зал №2
+  address: м. Львів, вул. Замарстинівська, 49
+form_endpoint: ''
+cf_analytics_token: ''

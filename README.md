@@ -87,9 +87,9 @@ Free and unlimited, with no cookies. It shows visits, pages, referrers, countrie
 
 Each gym in `settings.yml → gyms` gets its own Google Map (embed, no API key) and a route button. If the pin lands in the wrong place, fill in `map_query` with a more precise address.
 
-### Still placeholders
+### Not filled in yet
 
-Phone, hero stats (`XX+`), coach photo and bio facts, schedule times (`--:--`), achievements, gallery photos, videos, reviews. All of these are editable in the admin. Still to set up: the Telegram form Worker and the Cloudflare Web Analytics token.
+Not filled in yet: phone, coach photo and own bio, schedule times, achievements (his students' results), gallery, videos, reviews. Empty sections and an empty phone are hidden on the site and appear automatically once added in the admin. Still to set up: the Telegram form Worker and the Cloudflare Web Analytics token.
 
 ### Security
 

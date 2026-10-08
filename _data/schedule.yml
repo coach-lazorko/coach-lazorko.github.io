@@ -1,45 +1,46 @@
 # Порожня клітинка = немає тренування. Неділя з’являється в таблиці, лише якщо заповнена.
+# Поки час не заповнено, замість таблиці показується блок «Розклад оновлюється».
 tables:
-  - title: ""
-    rows:
-      - group: Діти
-        note: 6–11 років
-        highlight: false
-        mon: "--:--"
-        tue: ""
-        wed: "--:--"
-        thu: ""
-        fri: "--:--"
-        sat: ""
-        sun: ""
-      - group: Підлітки
-        note: 12–17 років
-        highlight: false
-        mon: ""
-        tue: "--:--"
-        wed: ""
-        thu: "--:--"
-        fri: ""
-        sat: "--:--"
-        sun: ""
-      - group: Дорослі
-        note: 18+
-        highlight: false
-        mon: "--:--"
-        tue: ""
-        wed: "--:--"
-        thu: ""
-        fri: "--:--"
-        sat: ""
-        sun: ""
-      - group: Спортивна група
-        note: за відбором
-        highlight: true
-        mon: "--:--"
-        tue: "--:--"
-        wed: "--:--"
-        thu: "--:--"
-        fri: "--:--"
-        sat: ""
-        sun: ""
-note: Розклад буде оновлено. Актуальний час уточнюйте в [Telegram](https://t.me/Onionmm).
+- title: ''
+  rows:
+  - group: Діти
+    note: 6–11 років
+    highlight: false
+    mon: ''
+    tue: ''
+    wed: ''
+    thu: ''
+    fri: ''
+    sat: ''
+    sun: ''
+  - group: Підлітки
+    note: 12–17 років
+    highlight: false
+    mon: ''
+    tue: ''
+    wed: ''
+    thu: ''
+    fri: ''
+    sat: ''
+    sun: ''
+  - group: Дорослі
+    note: 18+
+    highlight: false
+    mon: ''
+    tue: ''
+    wed: ''
+    thu: ''
+    fri: ''
+    sat: ''
+    sun: ''
+  - group: Спортивна група
+    note: за відбором
+    highlight: true
+    mon: ''
+    tue: ''
+    wed: ''
+    thu: ''
+    fri: ''
+    sat: ''
+    sun: ''
+note: Актуальний час і вільні місця уточнюйте в [Telegram](https://t.me/Onionmm).
