@@ -1,4 +1,4 @@
-# Тренер Лазорко — кікбоксинг WAKO (Львів)
+# Ярема Лазорко — кікбоксинг WAKO (Львів)
 
 Static one-page site for GitHub Pages: plain HTML/CSS/JS, no build step.
 Style follows the Golden Lion club logo: orange grunge "sun", black kicker silhouette, cream paper background, heavy display type.
@@ -30,14 +30,13 @@ On GitHub, open **Settings → Pages → Build and deployment**, choose **Deploy
 
 ## Fill in the content
 
-Every spot to edit has a `<!-- TODO -->` comment in `index.html`. Find and replace these placeholders:
+Already filled in: coach name (Ярема Лазорко), Instagram [@coach_lazorko](https://www.instagram.com/coach_lazorko/), Telegram [@Onionmm](https://t.me/Onionmm).
+
+Every remaining spot has a `<!-- TODO -->` comment in `index.html`:
 
 | Placeholder | Replace with |
 |---|---|
-| `your_instagram` | Instagram username (replace all) |
-| `your_telegram` | Telegram username (replace all) |
 | `+380000000000` / `+380 00 000 00 00` | phone number (link form / display form) |
-| `Ім’я` in the "Про тренера" heading | coach's first name |
 | `XX+`, `XXX+`, `XX` in the hero | real stats |
 | `--:--` in the schedule | training times |
 | "Назва змагань" cards | real competition results |
