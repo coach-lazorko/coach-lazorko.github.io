@@ -83,6 +83,10 @@ Free and unlimited, with no cookies. It shows visits, pages, referrers, countrie
 1. Cloudflare dashboard → **Analytics & Logs → Web Analytics → Add a site** → enter the site's hostname (e.g. `<user>.github.io`, or the custom domain) → choose the **JS snippet** option.
 2. Copy the `token` value from the snippet and paste it into the admin: **Контакти та налаштування → Токен Cloudflare Web Analytics**. The script is only included once the token is set.
 
+### Privacy policy
+
+`privacy.html` (in Ukrainian), linked from the form's consent line and the footer. It describes exactly what the site does: the form goes through the Worker to Telegram, Cloudflare Web Analytics (that paragraph only shows once the token is set), GitHub Pages hosting, Google Maps and YouTube embeds. The coach's name and contacts come from `_data/settings.yml`. If you change how data is handled, update the text and the date at the bottom. It's a plain-language template, not legal advice.
+
 ### Maps
 
 Each gym in `settings.yml → gyms` gets its own Google Map (embed, no API key) and a route button. If the pin lands in the wrong place, fill in `map_query` with a more precise address.

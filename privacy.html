@@ -1,0 +1,154 @@
+---
+layout: null
+---
+{%- comment -%}
+  Політика конфіденційності. Ім’я та контакти беруться з _data/settings.yml.
+  Змінюючи текст, оновіть дату внизу.
+{%- endcomment -%}
+{%- assign s = site.data.settings -%}
+{%- assign full_name = s.first_name | append: " " | append: s.last_name -%}
+{%- assign tg = s.telegram | remove: "@" -%}
+{%- assign tg_url = "https://t.me/" | append: tg -%}
+{%- assign ig = s.instagram | remove: "@" -%}
+{%- assign ig_url = "https://www.instagram.com/" | append: ig | append: "/" -%}
+{%- assign tel = s.phone | remove: " " | remove: "(" | remove: ")" | remove: "-" -%}
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Політика конфіденційності — {{ full_name }}</title>
+  <meta name="description" content="Які дані збирає сайт тренера з кікбоксингу {{ full_name }} і як вони використовуються.">
+  <meta name="theme-color" content="#141210">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/FixelDisplay-Black.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css">
+  {%- if s.cf_analytics_token and s.cf_analytics_token != "" %}
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ s.cf_analytics_token | strip }}"}'></script>
+  {%- endif %}
+</head>
+<body>
+{% include icons.html %}
+
+  <header class="header header--legal">
+    <div class="container header__inner">
+      <a class="brand" href="./">
+        <img class="brand__logo" src="assets/img/emblem.svg" alt="" width="48" height="48">
+        <span class="brand__text">
+          <b>{{ s.last_name }}</b>
+          <small>Кікбоксинг WAKO</small>
+        </span>
+      </a>
+      <a class="btn btn--ghost" href="./">На головну</a>
+    </div>
+  </header>
+
+  <main class="section legal">
+    <div class="container legal__inner">
+      <p class="eyebrow">Документи</p>
+      <h1 class="h2">Політика <span class="mark">конфіденційності</span></h1>
+      <p class="lead">
+        Ця сторінка пояснює, які дані збирає сайт тренера з кікбоксингу {{ full_name }},
+        навіщо вони потрібні і як ними розпоряджаються. Ми збираємо лише те,
+        що потрібно, щоб зв’язатися з вами щодо тренувань.
+      </p>
+
+      <h2>1. Хто відповідає за ваші дані</h2>
+      <p>
+        Володілець персональних даних — {{ full_name }}, тренер з кікбоксингу, м. Львів.
+        З питань щодо ваших даних пишіть у
+        <a href="{{ tg_url }}" target="_blank" rel="noopener">Telegram @{{ tg }}</a>
+        або <a href="{{ ig_url }}" target="_blank" rel="noopener">Instagram @{{ ig }}</a>
+        {%- if tel != "" %}, чи телефонуйте: <a href="tel:{{ tel }}">{{ s.phone | escape }}</a>{% endif %}.
+      </p>
+
+      <h2>2. Які дані ми отримуємо</h2>
+      <ul>
+        <li>
+          <b>Із форми заявки:</b> ім’я, номер телефону, обрана група і зал, зручний спосіб зв’язку
+          та коментар, якщо ви його залишили (наприклад, вік дитини чи досвід).
+        </li>
+        {%- if s.cf_analytics_token and s.cf_analytics_token != "" %}
+        <li>
+          <b>Статистика відвідувань:</b> знеособлені дані про перегляди сторінок — яку сторінку відкрито,
+          звідки був перехід, країна, тип пристрою та браузер. Для цього використовується
+          Cloudflare Web Analytics: сервіс не встановлює файли cookie і не дає змоги встановити вашу особу.
+        </li>
+        {%- endif %}
+      </ul>
+      <p>Ми не використовуємо рекламні трекери, не продаємо й не передаємо ваші дані для реклами.</p>
+
+      <h2>3. Навіщо</h2>
+      <p>
+        Лише щоб відповісти на вашу заявку чи запитання, підібрати групу, зал і час тренувань
+        та домовитися про перше заняття.
+      </p>
+
+      <h2>4. Як передаються та де зберігаються</h2>
+      <p>
+        Заявка з форми передається через сервіс Cloudflare, який її не зберігає, і надходить
+        повідомленням у Telegram тренеру. Там вона й зберігається; на сайті заявки не публікуються.
+      </p>
+      <p>
+        Сайт розміщено на GitHub Pages. Як і будь-який вебсервер, GitHub може тимчасово фіксувати
+        технічні дані (наприклад, IP-адресу) для захисту від зловживань — відповідно до власної
+        політики конфіденційності GitHub.
+      </p>
+
+      <h2>5. Сторонні сервіси на сторінці</h2>
+      <ul>
+        <li>
+          <b>Google Maps</b> — карти залів. Під час їх завантаження Google може отримувати технічні дані
+          та встановлювати файли cookie згідно з політикою конфіденційності Google.
+        </li>
+        <li>
+          <b>YouTube</b> — відео (якщо вони є на сайті) завантажуються лише після натискання кнопки
+          відтворення і в режимі підвищеної конфіденційності (youtube-nocookie.com).
+        </li>
+        <li>
+          <b>Instagram і Telegram</b> — посилання ведуть на ці сервіси, де діють їхні власні правила.
+        </li>
+      </ul>
+
+      <h2>6. Скільки зберігаються</h2>
+      <p>
+        Доки це потрібно для зв’язку з вами та організації тренувань. Ви можете будь-коли
+        попросити видалити ваші дані — ми це зробимо.
+      </p>
+
+      <h2>7. Дані дітей</h2>
+      <p>
+        Якщо ви залишаєте заявку за дитину, ви підтверджуєте, що є її батьком, матір’ю
+        чи іншим законним представником. Не надсилайте зайвих відомостей про дитину —
+        достатньо імені та віку.
+      </p>
+
+      <h2>8. Ваші права</h2>
+      <p>
+        Відповідно до Закону України «Про захист персональних даних» ви маєте право знати,
+        які ваші дані обробляються, вимагати їх виправлення чи видалення та відкликати згоду
+        на обробку. Для цього напишіть тренеру — відповімо протягом 30 днів. Ви також можете
+        звернутися до Уповноваженого Верховної Ради України з прав людини.
+      </p>
+
+      <h2>9. Зміни</h2>
+      <p>
+        Політику може бути оновлено; актуальна версія завжди на цій сторінці.
+      </p>
+      <p class="legal__date">Дата оновлення: 8 жовтня 2026 року</p>
+
+      <a class="btn btn--primary" href="./">
+        <svg aria-hidden="true" style="transform: rotate(180deg)"><use href="#i-arrow-right"/></svg>
+        На головну
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer footer--legal">
+    <div class="container footer__bottom">
+      <span>© {{ site.time | date: "%Y" }} {{ full_name }}. Усі права захищені.</span>
+      <a href="./">На головну</a>
+    </div>
+  </footer>
+</body>
+</html>

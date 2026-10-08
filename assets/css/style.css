@@ -1037,6 +1037,36 @@ p { margin: 0 0 1em; }
   font-size: 13px;
 }
 .footer__credits a { color: var(--muted-dark); }
+.footer__privacy { color: var(--muted-dark); }
+.footer__privacy:hover { color: var(--orange); }
+.form__consent a { color: inherit; text-decoration-color: var(--orange); text-decoration-thickness: 2px; }
+
+/* ---------- Legal page (privacy.html) ---------- */
+.header--legal {
+  position: sticky;
+  background: rgba(246, 241, 231, .92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.legal { padding-top: clamp(40px, 6vw, 72px); }
+.legal__inner { max-width: 760px; }
+.legal h2 {
+  margin: 40px 0 12px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.4vw, 24px);
+  text-transform: uppercase;
+}
+.legal p, .legal li { color: var(--muted); }
+.legal p b, .legal li b { color: var(--ink); }
+.legal ul { padding-left: 20px; }
+.legal li { margin-bottom: 10px; }
+.legal li::marker { color: var(--orange-deep); }
+.legal a:not(.btn) { color: var(--ink); font-weight: 500; text-decoration-color: var(--orange); text-decoration-thickness: 2px; }
+.legal__date { margin: 32px 0; font-size: 14px; }
+.footer--legal { padding: 0 0 24px; }
+.footer--legal .footer__bottom { margin-top: 0; }
+.footer--legal a { color: var(--muted-dark); }
 
 /* ---------- Videos ---------- */
 /* 6 колонок: горизонтальне відео займає 3, вертикальне — 1, тож у рядку вони однакової висоти */
