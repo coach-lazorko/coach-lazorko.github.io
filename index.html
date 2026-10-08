@@ -381,7 +381,7 @@
               Або напишіть напряму в месенджер.
             </p>
 
-            <!-- TODO: телефон та адреса -->
+            <!-- TODO: телефон -->
             <ul class="contact-list">
               <li>
                 <span class="icon-badge"><svg><use href="#i-phone"/></svg></span>
@@ -397,7 +397,11 @@
               </li>
               <li>
                 <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
-                <div><small>Адреса залу</small><a href="#map">м. Львів, вул. Піша, 1</a></div>
+                <div><small>Зал №1</small><a href="#map-1">м. Львів, вул. Піша, 1</a></div>
+              </li>
+              <li>
+                <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
+                <div><small>Зал №2</small><a href="#map-2">м. Львів, вул. Замарстинівська, 49</a></div>
               </li>
             </ul>
 
@@ -469,23 +473,47 @@
           </div>
         </div>
 
-        <!-- TODO: перевірте адресу. Щоб змінити — замініть текст після q= у src та destination= у посиланні -->
-        <div class="map reveal" id="map">
-          <iframe
-            title="Мапа: зал кікбоксингу у Львові"
-            src="https://maps.google.com/maps?q=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%9F%D1%96%D1%88%D0%B0%2C%201%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&amp;z=16&amp;output=embed"
-            loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-          <div class="map__card">
-            <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
-            <div>
-              <b>Зал кікбоксингу</b>
-              <span>м. Львів, вул. Піша, 1</span>
+        <!-- Щоб змінити адресу — замініть текст після q= у src та destination= у посиланні -->
+        <div class="locations">
+          <div class="locations__head reveal">
+            <p class="eyebrow">Локації</p>
+            <h2 class="h2">Два зали у <span class="accent">Львові</span></h2>
+          </div>
+          <div class="map reveal" id="map-1">
+            <iframe
+              title="Мапа: Зал №1"
+              src="https://maps.google.com/maps?q=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%9F%D1%96%D1%88%D0%B0%2C%201%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&amp;z=16&amp;output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <div class="map__card">
+              <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
+              <div>
+                <b>Зал №1</b>
+                <span>м. Львів, вул. Піша, 1</span>
+              </div>
+              <a class="btn btn--primary" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%9F%D1%96%D1%88%D0%B0%2C%201%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2">
+                <svg aria-hidden="true"><use href="#i-navigation"/></svg>
+                Маршрут
+              </a>
             </div>
-            <a class="btn btn--primary" target="_blank" rel="noopener"
-               href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%9F%D1%96%D1%88%D0%B0%2C%201%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2">
-              <svg aria-hidden="true"><use href="#i-navigation"/></svg>
-              Маршрут
-            </a>
+          </div>
+          <div class="map reveal" id="map-2">
+            <iframe
+              title="Мапа: Зал №2"
+              src="https://maps.google.com/maps?q=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%97%D0%B0%D0%BC%D0%B0%D1%80%D1%81%D1%82%D0%B8%D0%BD%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C%2049%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&amp;z=16&amp;output=embed"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            <div class="map__card">
+              <span class="icon-badge"><svg><use href="#i-map-pin"/></svg></span>
+              <div>
+                <b>Зал №2</b>
+                <span>м. Львів, вул. Замарстинівська, 49</span>
+              </div>
+              <a class="btn btn--primary" target="_blank" rel="noopener"
+                 href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F%20%D0%97%D0%B0%D0%BC%D0%B0%D1%80%D1%81%D1%82%D0%B8%D0%BD%D1%96%D0%B2%D1%81%D1%8C%D0%BA%D0%B0%2C%2049%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2">
+                <svg aria-hidden="true"><use href="#i-navigation"/></svg>
+                Маршрут
+              </a>
+            </div>
           </div>
         </div>
       </div>

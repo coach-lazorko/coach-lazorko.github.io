@@ -865,11 +865,18 @@ p { margin: 0 0 1em; }
 .form__status.is-success { color: #1d7a37; }
 .form__status.is-error { color: #b3261e; }
 
-/* Map */
+/* Locations / maps */
+.locations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: clamp(64px, 9vw, 104px);
+}
+.locations__head { grid-column: 1 / -1; margin-bottom: 12px; }
+.locations__head .h2 { margin-bottom: 0; }
 .map {
   position: relative;
-  height: clamp(340px, 45vw, 460px);
-  margin-top: clamp(56px, 8vw, 88px);
+  height: clamp(340px, 34vw, 420px);
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line-dark);
@@ -1029,6 +1036,7 @@ p { margin: 0 0 1em; }
   .about__media { max-width: 440px; width: calc(100% - 22px); }
 
   .contacts { grid-template-columns: 1fr; }
+  .locations { grid-template-columns: 1fr; }
 
   .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
 

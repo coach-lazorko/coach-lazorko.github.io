@@ -55,9 +55,14 @@ GitHub Pages can't process forms itself, so the form posts to [Formspree](https:
 
 Until the ID is set, submitting shows a message asking visitors to write in Telegram.
 
-## Map / address
+## Maps / addresses
 
-The address is currently **вул. Піша, 1, Львів** (the Golden Lion listing found online). Please verify it. To change it, URL-encode the new address and replace the text after `q=` in the map `<iframe src>` and after `destination=` in the "Маршрут" link. Also update the address text in the contacts list and map card.
+There are two gyms, each with its own map and "Маршрут" (route) button in the contacts section:
+
+1. **Зал №1** — вул. Піша, 1, Львів
+2. **Зал №2** — вул. Замарстинівська, 49, Львів
+
+To change an address, URL-encode it and replace the text after `q=` in that map's `<iframe src>` and after `destination=` in its "Маршрут" link. Then update the address text in the contacts list and on the map card.
 
 ## Credits
 
