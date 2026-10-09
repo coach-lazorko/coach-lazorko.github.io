@@ -1321,6 +1321,32 @@ body:has(.lightbox[open]) { overflow: hidden; }
 .fab.is-visible { opacity: 1; transform: none; pointer-events: auto; }
 .fab:hover { background: var(--ink); color: var(--orange); }
 
+/* ---------- Back to top (над кнопкою Telegram) ---------- */
+.to-top {
+  position: fixed;
+  right: 26px;
+  bottom: 92px;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 2px solid rgba(242, 156, 31, .6);
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--orange);
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .5);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px) scale(.8);
+  pointer-events: none;
+  transition: opacity .3s, transform .3s, background .2s, color .2s;
+}
+.to-top svg { width: 20px; height: 20px; transform: rotate(-90deg); }
+.to-top.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+.to-top:hover { background: var(--orange); color: var(--ink); border-color: var(--orange); }
+
 /* ---------- Reveal on scroll (лише з JS) ---------- */
 .js .reveal {
   opacity: 0;
@@ -1447,6 +1473,7 @@ body:has(.lightbox[open]) { overflow: hidden; }
   .footer__nav { grid-template-columns: repeat(2, auto); }
 
   .fab { right: 14px; bottom: 14px; width: 54px; height: 54px; }
+  .to-top { right: 18px; bottom: 80px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

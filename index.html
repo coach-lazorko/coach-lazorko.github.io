@@ -31,7 +31,8 @@ layout: null
   <meta property="og:title" content="{{ full_name }} — кікбоксинг WAKO у Львові">
   <meta property="og:description" content="Тренування з кікбоксингу для дітей та дорослих. Запишіться на тренування!">
 
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/logo-mark.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/logo-mark.png">
   <link rel="preload" href="assets/fonts/FixelDisplay-Black.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/style.css">
   <script>document.documentElement.classList.add("js");</script>
@@ -48,7 +49,7 @@ layout: null
   <header class="header" id="header">
     <div class="container header__inner">
       <a class="brand" href="#top" aria-label="На початок сторінки">
-        <img class="brand__logo" src="assets/img/emblem.svg" alt="" width="48" height="48">
+        <img class="brand__logo" src="assets/img/logo-mark.png" alt="" width="48" height="48">
         <span class="brand__text">
           <b>{{ s.last_name }}</b>
           <small>Кікбоксинг WAKO</small>
@@ -137,7 +138,7 @@ layout: null
           <img class="coach-photo" src="{{ about.photo | relative_url }}" alt="{{ full_name }}">
           {%- else %}
           <div class="photo-placeholder">
-            <img src="assets/img/emblem.svg" alt="">
+            <img src="assets/img/logo-mark.png" alt="">
           </div>
           {%- endif %}
           <div class="about__badge">
@@ -595,7 +596,7 @@ layout: null
     <div class="container footer__inner">
       <div class="footer__brand">
         <a class="brand brand--light" href="#top">
-          <img class="brand__logo" src="assets/img/emblem.svg" alt="" width="48" height="48">
+          <img class="brand__logo" src="assets/img/logo-mark.png" alt="" width="48" height="48">
           <span class="brand__text"><b>{{ s.last_name }}</b><small>Кікбоксинг WAKO</small></span>
         </a>
         <p>Тренування з кікбоксингу для дітей та дорослих у Львові.</p>
@@ -638,9 +639,12 @@ layout: null
     <div class="container footer__bottom">
       <span>© <span data-year>{{ site.time | date: "%Y" }}</span> {{ full_name }}. Усі права захищені.</span>
       <a class="footer__privacy" href="privacy.html">Політика конфіденційності</a>
-      <span class="footer__credits">Силует: <a href="https://game-icons.net" target="_blank" rel="noopener">game-icons.net</a> (CC BY 3.0)</span>
     </div>
   </footer>
+
+  <button class="to-top" type="button" aria-label="Прокрутити нагору">
+    <svg aria-hidden="true"><use href="#i-arrow-right"/></svg>
+  </button>
 
   <a class="fab" href="{{ tg_url }}" target="_blank" rel="noopener" aria-label="Написати в Telegram">
     <svg><use href="#i-telegram"/></svg>

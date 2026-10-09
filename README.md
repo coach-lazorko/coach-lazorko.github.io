@@ -35,7 +35,7 @@ _includes/icons.html  SVG icon sprite
 admin/                Sveltia CMS (Decap-compatible): index.html + config.yml
 assets/css/style.css  styles (colors are CSS variables at the top)
 assets/js/main.js     menu, scroll effects, contact form, video cards + popup player
-assets/img/           logo.jpg, emblem.svg, favicon.svg, uploads/ (CMS media)
+assets/img/           logo.jpg (hero), logo-mark.png (header, footer, favicon), uploads/ (CMS media)
 cloudflare/           Worker that sends form applications to Telegram (not published)
 ```
 
@@ -108,4 +108,4 @@ Not filled in yet: phone, coach photo and own bio, schedule times, achievements 
 
 ## Credits
 
-Kicker silhouette: [game-icons.net](https://game-icons.net) "High kick" (CC BY 3.0). The attribution is in the footer. UI icons: [Lucide](https://lucide.dev) (ISC). Brand icons: [Simple Icons](https://simpleicons.org) (CC0). Fonts: [Fixel](https://github.com/MacPaw/Fixel) by MacPaw, Kyiv (OFL-1.1), self-hosted in `assets/fonts/`. CMS: [Sveltia CMS](https://github.com/sveltia/sveltia-cms) (MIT).
+Logo: Golden Lion artwork provided by the site owner (`logo-mark.png` is the same mark cropped, with a transparent background). UI icons: [Lucide](https://lucide.dev) (ISC). Brand icons: [Simple Icons](https://simpleicons.org) (CC0). Fonts: [Fixel](https://github.com/MacPaw/Fixel) by MacPaw, Kyiv (OFL-1.1), self-hosted in `assets/fonts/`. CMS: [Sveltia CMS](https://github.com/sveltia/sveltia-cms) (MIT).

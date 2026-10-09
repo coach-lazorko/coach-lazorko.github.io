@@ -2,15 +2,25 @@ const header = document.getElementById('header');
 const nav = document.getElementById('nav');
 const burger = document.querySelector('.burger');
 const fab = document.querySelector('.fab');
+const toTop = document.querySelector('.to-top');
 
 /* ---------- Header shadow + floating button on scroll ---------- */
 function onScroll() {
   const y = window.scrollY;
   header.classList.toggle('is-scrolled', y > 20);
   fab.classList.toggle('is-visible', y > window.innerHeight * 0.8);
+  toTop.classList.toggle('is-visible', y > window.innerHeight * 1.5);
 }
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
+
+/* ---------- Back to top ---------- */
+toTop.addEventListener('click', () => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  // кнопка зникає, тож переносимо фокус на логотип угорі
+  document.querySelector('.brand').focus({ preventScroll: true });
+});
 
 /* ---------- Mobile menu ---------- */
 function setMenu(open) {
