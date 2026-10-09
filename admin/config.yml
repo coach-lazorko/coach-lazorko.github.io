@@ -10,6 +10,20 @@ backend:
 media_folder: assets/img/uploads
 public_folder: assets/img/uploads
 
+# Фото з телефона стискаються ще в браузері, до завантаження:
+# будь-який JPEG/PNG/HEIC → WebP, не більше 1600 px по довшій стороні.
+media_libraries:
+  default:
+    config:
+      max_file_size: 31457280  # 30 МБ — ліміт для оригіналу
+      slugify_filename: true   # «Фото (1).jpg» → «фото-1.webp»
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 1600
+          height: 1600
+
 collections:
   - name: content
     label: Вміст сайту
