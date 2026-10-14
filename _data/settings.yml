@@ -4,16 +4,18 @@ phone: ''
 telegram: Onionmm
 instagram: coach_lazorko
 stats:
-- value: WAKO
-  label: правила та змагання
-- value: '2'
-  label: зали у Львові
-- value: '5'
-  label: напрямів тренувань
+  - value: WAKO
+    label: правила та змагання!
+  - value: '2'
+    label: зали у Львові
+  - value: '5'
+    label: напрямів тренувань
 gyms:
-- name: Зал №1
-  address: м. Львів, вул. Піша, 1
-- name: Зал №2
-  address: м. Львів, вул. Замарстинівська, 49
+  - name: Зал №1
+    address: м. Львів, вул. Піша, 1
+    map_query: ''
+  - name: Зал №2
+    address: м. Львів, вул. Замарстинівська, 49
+    map_query: ''
 form_endpoint: ''
 cf_analytics_token: ''
