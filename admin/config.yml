@@ -1,8 +1,8 @@
 # Адмінка сайту (Sveltia CMS). Вхід: «Sign In Using Access Token» — див. README.
-# Після передачі репозиторію змініть repo на «новий-власник/coach-lazorko-website».
+# Репозиторій тренера; сайт: https://coach-lazorko.github.io/
 backend:
   name: github
-  repo: MarianPetlovanyi/coach-lazorko-website
+  repo: coach-lazorko/coach-lazorko.github.io
   branch: main
   # лише вхід за токеном: кнопка «Sign In with GitHub» потребує окремого OAuth-сервера
   auth_methods: [token]

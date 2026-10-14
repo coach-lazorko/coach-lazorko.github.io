@@ -6,10 +6,10 @@
 
 ## Як редагувати сайт (для тренера)
 
-1. Відкрийте **`адреса-сайту/admin/`** (напр. `https://<нікнейм>.github.io/coach-lazorko-website/admin/`).
+1. Відкрийте **https://coach-lazorko.github.io/admin/**.
 2. Натисніть **Sign In Using Access Token**. Перший раз потрібно створити токен:
    - натисніть посилання в підказці (або відкрийте GitHub → Settings → Developer settings → **Fine-grained tokens** → Generate new token);
-   - **Repository access** → *Only select repositories* → `coach-lazorko-website`;
+   - **Repository access** → *Only select repositories* → `coach-lazorko.github.io`;
    - **Permissions → Contents** → *Read and write*;
    - строк дії — до 1 року; скопіюйте токен і вставте в адмінку.
    Браузер запам’ятає вхід. Токен нікому не передавайте й не входьте в адмінку на чужих комп’ютерах.
@@ -56,12 +56,14 @@ docker run --rm -it -p 4000:4000 -v "$PWD":/srv -w /srv ruby:3.3 \
 
 ### Deploy
 
-**Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)`**. GitHub builds the Jekyll site on every push, including saves from the admin.
+Repo: **coach-lazorko/coach-lazorko.github.io**, site: **https://coach-lazorko.github.io/**. As a `<user>.github.io` repo it's served at the root of that address.
+
+**Settings → Pages → Build and deployment → Deploy from a branch → `main` / `(root)`**, and tick *Enforce HTTPS*. The repo must be **public**, because Pages on a free account only publishes public repos. GitHub builds the Jekyll site on every push, including saves from the admin.
 
 ### Admin (Sveltia CMS)
 
 - Sign-in uses a fine-grained personal access token (Contents: read/write), so no OAuth server is needed. For a "Sign in with GitHub" button instead, deploy [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) on Cloudflare Workers and set `backend.base_url` in `admin/config.yml`.
-- **After transferring the repo**, change `backend.repo` in `admin/config.yml` to `<new-owner>/coach-lazorko-website`.
+- The admin edits `coach-lazorko/coach-lazorko.github.io` (`backend.repo` in `admin/config.yml`). If the repo is ever renamed or moved, update that line.
 - The CMS version is pinned in `admin/index.html`. Bump it to update.
 - Edits are commits by the signed-in user. Uploaded images go to `assets/img/uploads/`.
 
@@ -75,7 +77,7 @@ Applications from the site form go to a small Cloudflare Worker (`cloudflare/for
 3. **Settings → Variables and Secrets:**
    - `TELEGRAM_BOT_TOKEN` (Secret) = the bot token;
    - open the Worker URL in a browser: it lists the chat IDs of everyone who pressed Start → add `TELEGRAM_CHAT_ID` (Secret). Use commas for several recipients, e.g. the coach and a group;
-   - `ALLOWED_ORIGINS` (Text) = the site address, e.g. `https://<user>.github.io` (add a custom domain here later).
+   - `ALLOWED_ORIGINS` (Text) = `https://coach-lazorko.github.io` (add a custom domain here later, comma-separated).
    Opening the Worker URL again should say «✅ Форма працює».
 4. Paste the Worker URL (`https://lazorko-form.<account>.workers.dev`) into the admin: **Контакти та налаштування → Адреса форми заявок**.
 
@@ -85,7 +87,7 @@ Until step 4, submitting the form shows a message asking visitors to write in Te
 
 Free and unlimited, with no cookies. It shows visits, pages, referrers, countries and devices, but not button clicks.
 
-1. Cloudflare dashboard → **Analytics & Logs → Web Analytics → Add a site** → enter the site's hostname (e.g. `<user>.github.io`, or the custom domain) → choose the **JS snippet** option.
+1. Cloudflare dashboard → **Analytics & Logs → Web Analytics → Add a site** → enter the site's hostname `coach-lazorko.github.io` (or the custom domain later) → choose the **JS snippet** option.
 2. Copy the `token` value from the snippet and paste it into the admin: **Контакти та налаштування → Токен Cloudflare Web Analytics**. The script is only included once the token is set.
 
 ### Privacy policy
@@ -106,7 +108,7 @@ Not filled in yet: phone, coach photo and own bio, schedule times, achievements 
 - **Admin token:** fine-grained, this repo only, Contents read/write, expires within a year. It's kept in the browser, so don't use the admin on shared computers, and revoke the token if a device is lost. Any unwanted change can be undone from git history.
 - **Admin script** is pinned with Subresource Integrity. When bumping the Sveltia version in `admin/index.html`, recompute the hash:
   `curl -sL https://unpkg.com/@sveltia/cms@<version>/dist/sveltia-cms.js | openssl dgst -sha384 -binary | openssl base64 -A`
-- **github.io origin:** all Pages sites of one account share the origin `<user>.github.io`, so another Pages site on the same account could read the admin token. A custom domain isolates it. Until then, don't host untrusted Pages sites on the owner's account.
+- **github.io origin:** all Pages sites of one account share the origin `coach-lazorko.github.io`, so another Pages site on the same account could read the admin token. A custom domain isolates it. Until then, don't host untrusted Pages sites on the owner's account.
 - **Never commit secrets.** This repo is public. Bot token and chat ID live only in Cloudflare's Worker secrets. If the bot token leaks, revoke it in @BotFather (`/revoke`).
 - **Form Worker:** spam trap, origin check, field and size limits. Scripts can fake the origin, so if spam shows up, add [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) (free). While `TELEGRAM_CHAT_ID` is unset, the Worker URL lists names and IDs of whoever messaged the bot, so finish setup right away.
 - **Personal data:** applications (names, phones, children's ages) are stored only in the Telegram chat that receives them. Keep that chat limited to the coach.

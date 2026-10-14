@@ -4,7 +4,7 @@
  * Змінні (Cloudflare → Workers → цей worker → Settings → Variables and Secrets):
  *   TELEGRAM_BOT_TOKEN  токен бота від @BotFather                      (Secret)
  *   TELEGRAM_CHAT_ID    куди надсилати заявки; кілька — через кому     (Secret)
- *   ALLOWED_ORIGINS     адреса сайту, напр. https://name.github.io;
+ *   ALLOWED_ORIGINS     адреса сайту: https://coach-lazorko.github.io;
  *                       кілька — через кому. Порожньо = будь-який сайт  (Text)
  *
  * Відкрийте адресу worker у браузері, щоб перевірити налаштування.
