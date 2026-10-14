@@ -17,5 +17,5 @@ gyms:
   - name: Зал №2
     address: м. Львів, вул. Замарстинівська, 49
     map_query: ''
-form_endpoint: ''
+form_endpoint: https://lazorko-form.aremalazorko86.workers.dev/
 cf_analytics_token: ''
